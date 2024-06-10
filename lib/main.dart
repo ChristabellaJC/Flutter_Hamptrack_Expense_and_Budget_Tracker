@@ -1,3 +1,4 @@
+import 'package:dev_hampter/screens/WelcomePage.dart';
 import 'package:dev_hampter/screens/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        useMaterial3: true,
+        fontFamily: 'BalooThambi2',
+        // useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: WelcomePage(),
     );
   }
 }

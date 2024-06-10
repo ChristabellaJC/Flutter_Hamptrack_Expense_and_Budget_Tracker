@@ -2,14 +2,9 @@ import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class Splashscreen extends StatelessWidget {
+  const Splashscreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset('assets/images/splashMou.png', width: 180),
               const SizedBox(height: 15),
               StrokeText(
+                textAlign: TextAlign.center,
                   text: "HampTrack",
                   textStyle: TextStyle(
                   fontFamily: 'BalooThambi2',
@@ -55,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   strokeWidth: 5,
 
                 ),
-StrokeText(
+                StrokeText(
+                  textAlign: TextAlign.center,
                   text: "HampTrack",
                   textStyle: TextStyle(
                   fontFamily: 'BalooThambi2',
