@@ -10,7 +10,7 @@ class ElevatedButtonExample extends StatefulWidget {
   final String enabledText;
 
   const ElevatedButtonExample({
-    Key? key,
+    super.key,
     required this.enabledText,
     required this.onPressed,
     required this.borderRadius,
@@ -27,7 +27,7 @@ class ElevatedButtonExample extends StatefulWidget {
           Color(0xFFFAE588),
           Color(0xFFF9DC5C)
         ]),
-  }) : super(key: key);
+  });
 
   @override
   State<ElevatedButtonExample> createState() => _ElevatedButtonExampleState();
