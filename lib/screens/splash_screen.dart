@@ -12,13 +12,13 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
-  final bool _visible = true;
+  bool _visible = true;
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 1), () {
+    Timer(Duration(seconds: 1), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const WelcomePage()),
+        MaterialPageRoute(builder: (context) => WelcomePage()),
       );
     });
   }
@@ -28,7 +28,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     return Scaffold(
       body: AnimatedOpacity(
         opacity: _visible ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 500),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

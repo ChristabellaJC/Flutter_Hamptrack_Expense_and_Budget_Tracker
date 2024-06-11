@@ -1,5 +1,5 @@
 import 'package:dev_hampter/components/buttons.dart';
-import 'package:dev_hampter/screens/SignIn.dart';
+import 'package:dev_hampter/screens/sign_in.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -36,7 +36,7 @@ class _WelcomePageState extends State<WelcomePage> {
               height: height * .7,
               decoration: BoxDecoration(
                   color: primaryColor,
-                  image: const DecorationImage(
+                  image: DecorationImage(
                       image: AssetImage('assets/images/background.png'),
                       fit: BoxFit.cover)),
             ),
@@ -77,7 +77,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   strokeColor: whiteColor,
                   strokeWidth: 5,
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
                 ElevatedButtonExample(
