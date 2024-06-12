@@ -1,3 +1,4 @@
+import 'package:dev_hampter/components/box.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +32,9 @@ class MyHomePage extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 55, 15, 40),
+                padding: EdgeInsets.fromLTRB(15, 90, 15, 40),
                 width: double.infinity,
-                height: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.3,
                 color: Colors.transparent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +72,7 @@ class MyHomePage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                height: 600,
+                height: MediaQuery.of(context).size.height * 0.75,
                 decoration: BoxDecoration(
                   color: secondaryColor,
                   borderRadius: BorderRadius.only(
@@ -98,30 +99,7 @@ class MyHomePage extends StatelessWidget {
                               ),
 
                               // BOX EXPENSE
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Expenses',
-                                    style: TextStyle(
-                                      color: primaryTextColor
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('Rp',
-                                        style: TextStyle(
-                                          color: whiteColor
-                                        ),
-                                      ),
-                                      Text('250.000',
-                                      style: TextStyle(
-                                          color: whiteColor
-                                        ),
-                                      ),
-                                  ],)
-                                ],
-                              ),
+                              child: Box(title: 'Expense', value: 250000)
                             ),
                             SizedBox(width: 30),
                             // BOX INCOME
@@ -132,30 +110,7 @@ class MyHomePage extends StatelessWidget {
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(13),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Income',
-                                    style: TextStyle(
-                                      color: primaryTextColor
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('Rp',
-                                        style: TextStyle(
-                                          color: whiteColor
-                                        ),
-                                      ),
-                                      Text('250.000',
-                                      style: TextStyle(
-                                          color: whiteColor
-                                        ),
-                                      ),
-                                  ],)
-                                ],
-                              ),
+                              child: Box(title: 'Income', value: 250000),
                             ),
                           ],
                         ),
