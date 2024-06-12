@@ -111,9 +111,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       isPassword: true,
                       controller: _checkPassController,
                     ),
-                    SizedBox(
-                      height: height * .1,
-                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: EdgeInsets.only(bottom: height * .05),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -170,14 +178,14 @@ class _SignUpPageState extends State<SignUpPage> {
                             Get.toNamed(RoutesClass.signInPage);
                           },
                           text: 'Sign In',
-                          textColor: textColor,
+                          textColor: secTextColor,
                         )
                       ],
                     )
                   ],
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
