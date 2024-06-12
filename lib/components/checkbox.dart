@@ -14,7 +14,7 @@ class CustomCheckBox extends StatefulWidget {
 
 class _CustomCheckBoxState extends State<CustomCheckBox> {
   bool _termsChecked = false;
-  Color _borderColor = Color(0xFFE0AC00);
+  final Color _borderColor = const Color(0xFFE0AC00);
 
   @override
   Widget build(BuildContext context) {

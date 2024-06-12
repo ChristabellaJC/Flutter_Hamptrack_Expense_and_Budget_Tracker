@@ -4,7 +4,7 @@ import 'package:stroke_text/stroke_text.dart';
 import 'package:dev_hampter/utils/terms_of_service_text.dart';
 
 class TermsOfServicePage extends StatefulWidget {
-  const TermsOfServicePage({Key? key}) : super(key: key);
+  const TermsOfServicePage({super.key});
 
   @override
   State<TermsOfServicePage> createState() => _TermsOfServicePage();
@@ -63,9 +63,9 @@ class _TermsOfServicePage extends State<TermsOfServicePage> {
                     ),
                     Expanded(
                       child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Padding(
-                          padding: EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: Container(
                             child: Text(
                               tosText,

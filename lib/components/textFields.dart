@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
   final Color _backgroundColor;
   final bool _isPassword;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     required String text,
     required double fontSize,
@@ -62,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: widget._width,
         height: widget._height,
         child: TextField(

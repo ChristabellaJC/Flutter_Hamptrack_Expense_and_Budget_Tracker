@@ -23,7 +23,7 @@ class _BoxState extends State<Box> {
       children: [
         Text(widget._title,
           style: TextStyle(
-            color: primaryTextColor
+            color: textColor,
           ),
         ),
         Row(
