@@ -3,6 +3,7 @@ import 'package:dev_hampter/components/checkbox.dart';
 import 'package:dev_hampter/components/textFields.dart';
 import 'package:dev_hampter/routes/routes.dart';
 import 'package:dev_hampter/utils/colors.dart';
+import 'package:dev_hampter/utils/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -30,6 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             Container(
@@ -43,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
+                padding: padding,
                 height: height * .8, // Adjust the height as needed
                 width: width,
                 decoration: BoxDecoration(
@@ -54,9 +57,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: height * .02,
-                    ),
                     StrokeText(
                       text: 'Join Us!',
                       textAlign: TextAlign.center,

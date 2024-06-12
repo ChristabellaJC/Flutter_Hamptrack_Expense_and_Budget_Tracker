@@ -45,7 +45,7 @@ class RoutesClass {
     ),
     GetPage(
       name: termsOfServicePage,
-      page: () => TermsOfServicePage(), // Corrected route name
+      page: () => TermsOfServicePage(),
     ),
   ];
 }

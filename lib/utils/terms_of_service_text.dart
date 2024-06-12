@@ -31,6 +31,7 @@ Uploading, posting, or transmitting any content that you do not have a right to 
 Uploading, posting, or transmitting any content that infringes any patent, trademark, trade secret, copyright, or other proprietary rights of any party.
 Interfering with or disrupting the App or servers or networks connected to the App.
 Engaging in any conduct that restricts or inhibits any other user from using or enjoying the App.
+
 8. Intellectual Property
 All content, features, and functionality on the App, including but not limited to text, graphics, logos, icons, and software, are the exclusive property of HampTrack and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.
 
@@ -44,6 +45,7 @@ You agree not to:
 Modify, adapt, translate, reverse engineer, decompile, or disassemble any portion of the App.
 Use the App for any commercial purposes without the prior written consent of HampTrack.
 Access or use the App in any manner that could damage, disable, overburden, or impair any HampTrack server or the networks connected to any HampTrack server.
+
 10. Third-Party Services
 The App may contain links to third-party websites, products, or services that are not owned or controlled by HampTrack. HampTrack has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that HampTrack is not responsible or liable for any damage or loss caused by or in connection with the use of any such third-party websites, products, or services.
 
