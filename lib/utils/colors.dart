@@ -10,6 +10,7 @@ var iconColor = const Color(0xFFE0AC00);
 var primaryTextColor = const Color(0xFFE0AC00);
 var secTextColor = const Color(0xFFF9DC5C);
 var whiteColor = const Color(0xFFFFFFFF);
+var strokeColor = const Color(0xFFF9DC5C);
 
 var errorColor = Colors.red;
 
