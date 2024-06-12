@@ -1,6 +1,6 @@
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/routes/routes.dart';
-import 'package:dev_hampter/screens/sign_in_page.dart';
+import 'package:dev_hampter/screens/sign_up_page.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,7 +88,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     enabledText: 'Get Started',
                     borderRadius: BorderRadius.circular(20),
                     onPressed: () {
-                      Get.toNamed(RoutesClass.signInPage);
+                      Get.toNamed(RoutesClass.signUpPage);
                     },
                   ),
                   SizedBox(

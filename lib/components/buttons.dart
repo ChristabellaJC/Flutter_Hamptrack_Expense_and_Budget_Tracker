@@ -75,3 +75,50 @@ class _CustomButtonState extends State<CustomButton> {
     );
   }
 }
+
+class CustomTextButton extends StatefulWidget {
+  final VoidCallback? _onPressed;
+  final String _text;
+  final double _textSize;
+  final Color _textColor;
+  final FontWeight? _textWeight;
+
+  const CustomTextButton({
+    super.key,
+    required void Function()? onPressed,
+    required String text,
+    required Color textColor,
+    FontWeight textWeight = FontWeight.w700,
+    double textSize = 18,
+  })  : _onPressed = onPressed,
+        _text = text,
+        _textSize = textSize,
+        _textColor = textColor,
+        _textWeight = textWeight;
+
+  @override
+  State<CustomTextButton> createState() => _CustomTextButtonState();
+}
+
+class _CustomTextButtonState extends State<CustomTextButton> {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: widget._onPressed,
+      style: TextButton.styleFrom(
+        minimumSize: Size.zero,
+        padding: EdgeInsets.zero,
+      ),
+      child: Text(
+        widget._text,
+        style: TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: widget._textColor,
+            fontFamily: 'BalooThambi2',
+            fontSize: widget._textSize,
+            color: widget._textColor,
+            fontWeight: widget._textWeight),
+      ),
+    );
+  }
+}

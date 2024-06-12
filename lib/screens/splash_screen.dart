@@ -24,7 +24,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       });
     });
 
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(milliseconds: 800), () {
       Get.toNamed(RoutesClass.getWelcomePage());
     });
   }
