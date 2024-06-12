@@ -1,6 +1,8 @@
-import 'package:dev_hampter/screens/SplashScreen.dart';
+import 'package:dev_hampter/routes/routes.dart';
+import 'package:dev_hampter/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dev_hampter/routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'BalooThambi2',
         // useMaterial3: true,
       ),
-      home: const SplashScreenPage(),
+      initialRoute: RoutesClass.splashScreen,
+      getPages: RoutesClass.routes,
     );
   }
 }
