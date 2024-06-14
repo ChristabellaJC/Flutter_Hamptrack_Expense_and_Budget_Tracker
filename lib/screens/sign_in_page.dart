@@ -33,19 +33,6 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
-  }
-
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -175,8 +162,11 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     CustomButton(
                       enabledText: 'Sign In',
-                      onPressed: () {
-                        Get.toNamed(RoutesClass.homePage);
+                      onPressed: () async {
+                        await signInWithEmailAndPassword();
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          Get.toNamed(RoutesClass.homePage);
+                        }
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),

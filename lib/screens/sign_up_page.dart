@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import '../auth.dart';
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
@@ -16,11 +19,29 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  String? errorMessage = '';
+
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text
+      );
+      // Navigate to the home page after successful sign up
+      Get.toNamed(RoutesClass.homePage);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _checkPassController = TextEditingController();
   double height = 0, width = 0;
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -154,8 +175,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     CustomButton(
                       enabledText: 'Sign Up',
-                      onPressed: () {
-                        Get.toNamed(RoutesClass.homePage);
+                      onPressed: () async {
+                        await createUserWithEmailAndPassword();
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),
