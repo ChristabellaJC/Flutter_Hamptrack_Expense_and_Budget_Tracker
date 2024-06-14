@@ -1,3 +1,4 @@
+import 'package:dev_hampter/components/dates.dart';
 import 'package:dev_hampter/components/mou_state.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
@@ -16,6 +17,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.height;
+    String condition = mouCondition();
+    String state = mouState();
     String incomeAmount = NumberFormat.currency(
       locale: 'id_ID',
       symbol: 'Rp. ',
@@ -87,140 +90,163 @@ class HomePage extends StatelessWidget {
                     topLeft: Radius.circular(30),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: height * .15,
-                          width: width * .30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: primaryColor,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Income',
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontFamily: 'BalooThambi2',
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: height * .15,
+                            width: width * .30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: primaryColor,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Income',
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontFamily: 'BalooThambi2',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                incomeAmount,
-                                style: TextStyle(
-                                  color: whiteColor,
-                                  fontFamily: 'BalooThambi2',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            ],
+                                Text(
+                                  incomeAmount,
+                                  style: TextStyle(
+                                    color: whiteColor,
+                                    fontFamily: 'BalooThambi2',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
+                          Container(
+                            height: height * .15,
+                            width: width * .30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: primaryColor,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Expenses',
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontFamily: 'BalooThambi2',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  expenseAmount,
+                                  style: TextStyle(
+                                    color: whiteColor,
+                                    fontFamily: 'BalooThambi2',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: height * .02,
+                      ),
+                      Text(
+                        'Budget',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Container(
-                          height: height * .15,
-                          width: width * .30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: primaryColor,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Expenses',
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontFamily: 'BalooThambi2',
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                expenseAmount,
-                                style: TextStyle(
-                                  color: whiteColor,
-                                  fontFamily: 'BalooThambi2',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: iconColor, width: 2), // Outline border
+                          borderRadius: BorderRadius.circular(
+                              10), // Adjust border radius as needed
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: height * .02,
-                    ),
-                    Text(
-                      'Budget',
-                      style: TextStyle(
-                        color: textColor,
-                        fontFamily: 'BalooThambi2',
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
+                        child: GFProgressBar(
+                          percentage: budgetProg,
+                          lineHeight: 20,
+                          backgroundColor: secondaryColor,
+                          progressBarColor: primaryColor,
+                          animation: true,
+                        ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: iconColor, width: 2), // Outline border
-                        borderRadius: BorderRadius.circular(
-                            10), // Adjust border radius as needed
+                      SizedBox(
+                        height: height * .1,
                       ),
-                      child: GFProgressBar(
-                        percentage: budgetProg,
-                        lineHeight: 20,
-                        backgroundColor: secondaryColor,
-                        progressBarColor: primaryColor,
-                        animation: true,
+                      Image.asset(
+                        state,
+                        height: 150,
                       ),
-                    ),
-                    SizedBox(
-                      height: height * .1,
-                    ),
-                    MouState(),
-                    SizedBox(
-                      height: height * .05,
-                    ),
-                    Text(
-                      'Mou',
-                      style: TextStyle(
-                        color: textColor,
-                        fontFamily: 'BalooThambi2',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        'Mou',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    // Text(
-                    //   mouCondition,
-                    //   style: TextStyle(
-                    //     color: textColor,
-                    //     fontFamily: 'BalooThambi2',
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.normal,
-                    //   ),
-                    // ),
-                    Divider(
-                      color: iconColor,
-                      thickness: 2,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    Divider(
-                      color: iconColor,
-                      thickness: 2,
-                      indent: 40,
-                      endIndent: 40,
-                    )
-                  ],
+                      Text(
+                        condition,
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Divider(
+                        color: iconColor,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      Divider(
+                        color: iconColor,
+                        thickness: 2,
+                        indent: 40,
+                        endIndent: 40,
+                      ),
+                      SizedBox(
+                        height: height * .05,
+                      ),
+                      Text(
+                        'History',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * .01,
+                      ),
+                      HorizontalCalendar(
+                        onDateSelected: (selectedDate) {
+                          // Handle the selected date
+                          print('Selected Date: $selectedDate');
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

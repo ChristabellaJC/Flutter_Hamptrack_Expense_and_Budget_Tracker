@@ -1,61 +1,29 @@
 import 'package:dev_hampter/utils/uni_vars.dart';
-import 'package:flutter/material.dart';
 
-class MouState extends StatefulWidget {
-  @override
-  _MouStateState createState() => _MouStateState();
+String mouCondition() {
+  if (budgetProg >= 0.7 && budgetProg <= 1) {
+    return 'Feeling Happy!';
+  } else if (budgetProg >= 0.4 && budgetProg < 0.7) {
+    return 'Doing Well!';
+  } else if (budgetProg >= 0.1 && budgetProg < 0.4) {
+    return 'A bit concerned...';
+  } else if (budgetProg == 0) {
+    return 'Dead';
+  } else {
+    return 'Invalid value';
+  }
 }
 
-class _MouStateState extends State<MouState> {
-  late String mouCondition;
-
-  @override
-  void initState() {
-    super.initState();
-    updateMouCondition(
-        budgetProg); // Initialize mouCondition based on initial budgetProg
-  }
-
-  void updateMouCondition(double value) {
-    if (value >= 0.7 && value <= 1) {
-      mouCondition = 'Feeling Happy!';
-    } else if (value >= 0.4 && value < 0.7) {
-      mouCondition = 'Doing Well!';
-    } else if (value >= 0.1 && value < 0.4) {
-      mouCondition = 'A bit concerned...';
-    } else if (value == 0) {
-      mouCondition = 'Dead';
-    } else {
-      mouCondition = 'Invalid value';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        getImageForValue(budgetProg),
-        SizedBox(height: 10),
-        Text(
-          mouCondition,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
-
-  Widget getImageForValue(double value) {
-    if (value >= 0.7 && value <= 1) {
-      return Image.asset('assets/mous/mouA.png');
-    } else if (value >= 0.4 && value < 0.7) {
-      return Image.asset('assets/mous/mouB.png');
-    } else if (value >= 0.1 && value < 0.4) {
-      return Image.asset('assets/mous/mouC.png');
-    } else if (value == 0) {
-      return Image.asset('assets/mous/mouD.png');
-    } else {
-      return Text('Invalid value');
-    }
+String mouState() {
+  if (budgetProg >= 0.7 && budgetProg <= 1) {
+    return 'assets/images/mous/mouA.png';
+  } else if (budgetProg >= 0.4 && budgetProg < 0.7) {
+    return 'assets/images/mous/mouB.png';
+  } else if (budgetProg >= 0.1 && budgetProg < 0.4) {
+    return 'assets/images/mous/mouC.png';
+  } else if (budgetProg == 0) {
+    return 'assets/images/mous/mouD.png';
+  } else {
+    return 'Invalid value';
   }
 }
