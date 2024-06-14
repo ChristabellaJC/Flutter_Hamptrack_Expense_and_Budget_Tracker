@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "413732506963",
+    "project_id": "hamptrack",
+    "storage_bucket": "hamptrack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413732506963:android:ff0ab03b35af123864e5a6",
+        "android_client_info": {
+          "package_name": "com.devhampter.hamptrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt6HtG2GTAP2tKCNfbXOyO7Ahwt6RDTls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413732506963:android:5f77ea4c068f1a0964e5a6",
+        "android_client_info": {
+          "package_name": "com.example.dev_hampter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt6HtG2GTAP2tKCNfbXOyO7Ahwt6RDTls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
