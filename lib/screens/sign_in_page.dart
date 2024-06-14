@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import '../auth.dart';
+
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -16,6 +19,33 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  String? errorMessage = '';
+  bool isLogin = true;
+
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
