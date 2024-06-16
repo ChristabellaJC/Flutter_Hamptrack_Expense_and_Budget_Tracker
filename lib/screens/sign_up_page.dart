@@ -1,17 +1,12 @@
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/components/checkbox.dart';
 import 'package:dev_hampter/components/textFields.dart';
-import 'package:dev_hampter/functions/authentication/create_user.dart';
-import 'package:dev_hampter/functions/authentication/user_model.dart';
 import 'package:dev_hampter/routes/routes.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import '../functions/authentication/auth.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -21,92 +16,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String? errorMessage = '';
-  bool isTOSChecked = false;
-
-  Future<void> createUserWithEmailAndPassword() async {
-    if (!isTOSChecked) {
-      Get.snackbar(
-        "Error",
-        "You must agree to the Terms of Service",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColor,
-        colorText: textColor,
-      );
-      return;
-    }
-
-    if (_usernameController.text.isEmpty) {
-      Get.snackbar(
-        "Error",
-        "Username cannot be empty",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColor,
-        colorText: textColor,
-      );
-      return;
-    }
-
-    if (_emailController.text.isEmpty) {
-      Get.snackbar(
-        "Error",
-        "Email cannot be empty",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColor,
-        colorText: textColor,
-      );
-      return;
-    }
-
-    if (_passwordController.text.isEmpty) {
-      Get.snackbar(
-        "Error",
-        "Password cannot be empty",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColor,
-        colorText: textColor,
-      );
-      return;
-    }
-
-    if (_passwordController.text != _checkPassController.text) {
-      Get.snackbar(
-        "Error",
-        "Passwords do not match",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColor,
-        colorText: textColor,
-      );
-      return;
-    }
-
-    final user = UserModel(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-      username: _usernameController.text.trim(),
-    );
-    createUser(user);
-
-    try {
-      await Auth().createUserWithEmailAndPassword(
-        email: user.email,
-        password: user.password,
-      );
-      // Navigate to the home page after successful sign up
-      Get.toNamed(RoutesClass.homePage);
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
-  }
-
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _checkPassController = TextEditingController();
   double height = 0, width = 0;
-
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -213,12 +127,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         CustomCheckBox(
                           scaleSize: 1.0,
-                          value: isTOSChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              isTOSChecked = value ?? false;
-                            });
-                          },
                         ),
                         SizedBox(
                           width: .5,
@@ -246,8 +154,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     CustomButton(
                       enabledText: 'Sign Up',
-                      onPressed: () async {
-                        await createUserWithEmailAndPassword();
+                      onPressed: () {
+                        Get.toNamed(RoutesClass.homePage);
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -277,15 +185,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
-            ),
-            if (errorMessage != null)
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  errorMessage!,
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
+            )
           ],
         ),
       ),

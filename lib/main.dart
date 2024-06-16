@@ -4,15 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dev_hampter/routes/routes.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const MyApp());
 }
 
