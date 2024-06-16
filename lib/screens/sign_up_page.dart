@@ -1,15 +1,14 @@
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/components/checkbox.dart';
 import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/functions/authentication/create_user.dart';
+import 'package:dev_hampter/functions/authentication/user_model.dart';
 import 'package:dev_hampter/routes/routes.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -22,18 +21,12 @@ class _SignUpPageState extends State<SignUpPage> {
   String? errorMessage = '';
 
   Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text
-      );
-      // Navigate to the home page after successful sign up
-      Get.toNamed(RoutesClass.homePage);
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
+    final user = UserModel(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+      username: _usernameController.text.trim(),
+    );
+    await createUser(user);
   }
 
   final _usernameController = TextEditingController();

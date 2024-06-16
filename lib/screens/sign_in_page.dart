@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
+import '../functions/authentication/auth.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -25,7 +25,9 @@ class _SignInPageState extends State<SignInPage> {
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -37,6 +39,7 @@ class _SignInPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   double height = 0, width = 0;
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -133,10 +136,10 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomCheckBox(
+                        const CustomCheckBox(
                           scaleSize: 1.0,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: .5,
                         ),
                         Text(
