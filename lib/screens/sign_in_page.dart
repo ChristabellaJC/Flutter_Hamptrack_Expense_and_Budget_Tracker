@@ -7,7 +7,6 @@ import 'package:dev_hampter/utils/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import '../functions/authentication/auth.dart';
 
@@ -19,26 +18,81 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  String? errorMessage = '';
-  bool isLogin = true;
-
-  Future<void> signInWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
-  }
+  bool isTOSChecked = false;
 
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   double height = 0, width = 0;
+
+  Future<void> signInWithEmailAndPassword() async {
+    if (!isTOSChecked) {
+      Get.snackbar(
+        "Error",
+        "You must agree to the Terms of Service",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: primaryColor,
+        colorText: textColor,
+      );
+      return;
+    }
+
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      Get.snackbar(
+        "Error",
+        "Email and password cannot be empty",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: primaryColor,
+        colorText: textColor,
+      );
+      return;
+    }
+
+    try {
+      // Attempt to sign in
+      await Auth().signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      // After signing in, check the username if provided
+      if (_usernameController.text.isNotEmpty) {
+        final userDoc = await Auth().getUserByEmail(_emailController.text);
+        final userData = userDoc.data();
+        if (userData != null &&
+            userData['Username'] == _usernameController.text) {
+          Get.toNamed(RoutesClass.homePage);
+        } else {
+          Get.snackbar(
+            "Error",
+            "Incorrect username.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: primaryColor,
+            colorText: textColor,
+          );
+          await Auth().signOut(); // Sign out if username is incorrect
+        }
+      } else {
+        Get.toNamed(RoutesClass.homePage);
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message ?? "An error occurred",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: primaryColor,
+        colorText: textColor,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: primaryColor,
+        colorText: textColor,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +190,14 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomCheckBox(
+                        CustomCheckBox(
                           scaleSize: 1.0,
+                          value: isTOSChecked,
+                          onChanged: (value) {
+                            setState(() {
+                              isTOSChecked = value ?? false;
+                            });
+                          },
                         ),
                         const SizedBox(
                           width: .5,
@@ -167,9 +227,6 @@ class _SignInPageState extends State<SignInPage> {
                       enabledText: 'Sign In',
                       onPressed: () async {
                         await signInWithEmailAndPassword();
-                        if (FirebaseAuth.instance.currentUser != null) {
-                          Get.toNamed(RoutesClass.homePage);
-                        }
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),
