@@ -1,6 +1,8 @@
 import 'package:dev_hampter/components/block.dart';
 import 'package:dev_hampter/components/dates.dart';
 import 'package:dev_hampter/components/mou_state.dart';
+import 'package:dev_hampter/functions/authentication/auth.dart';
+import 'package:dev_hampter/functions/fetching_data/username.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:dev_hampter/utils/uni_vars.dart';
@@ -10,15 +12,46 @@ import 'package:stroke_text/stroke_text.dart';
 
 void main() => runApp(const HomePage());
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String username = '';
+  @override
+  void initState() {
+    super.initState();
+    fetchUsername();
+  }
+
+  // Future<void> fetchUsername() async {
+  //   try {
+  //     final auth = Auth();
+  //     final user = auth.currentUser;
+  //     if (user != null) {
+  //       final userDoc = await auth.getUserByEmail(user.email!);
+  //       final userData = userDoc.data();
+  //       if (userData != null) {
+  //         setState(() {
+  //           username = userData['Username'];
+  //         });
+  //       }
+  //     }
+  //   } catch (e) {
+  //     // Handle errors appropriately in a real app
+  //     print('Error fetching user data: $e');
+  //   }
+  // }
+
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.height;
     String condition = mouCondition();
     String state = mouState();
+
     // String incomeAmount = NumberFormat.currency(
     //   locale: 'id_ID',
     //   symbol: 'Rp. ',
@@ -246,7 +279,7 @@ class HomePage extends StatelessWidget {
                       ),
                       CustomBlock(
                         amount: 10000,
-                        type: true,
+                        type: type,
                         date: DateTime.now(),
                       ),
                     ],

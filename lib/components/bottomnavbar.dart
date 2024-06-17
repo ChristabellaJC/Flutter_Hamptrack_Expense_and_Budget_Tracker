@@ -18,11 +18,19 @@ class NavBar extends StatelessWidget {
         data: Theme.of(context).copyWith(
           canvasColor: secondaryColor,
         ),
-        child: SizedBox(
+        child: Container(
+          decoration: BoxDecoration(
+            border: BorderDirectional(
+              top: BorderSide(
+                width: 2,
+                color: primaryColor,
+              ),
+            ),
+          ),
           height: MediaQuery.of(context).size.height * 0.1,
           child: Obx(
             () => BottomNavigationBar(
-              selectedItemColor: primaryColor,
+              selectedItemColor: iconColor,
               unselectedItemColor: primaryColor,
               elevation: 0,
               currentIndex: controller.selectedIndex.value,

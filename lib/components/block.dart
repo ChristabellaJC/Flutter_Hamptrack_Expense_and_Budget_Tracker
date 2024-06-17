@@ -1,4 +1,5 @@
 import 'package:dev_hampter/utils/colors.dart';
+import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,8 +37,8 @@ class _CustomBlockState extends State<CustomBlock> {
   @override
   Widget build(BuildContext context) {
     String _formattedamount = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp. ',
+      locale: locale,
+      symbol: symbol,
       decimalDigits: 0,
     ).format(widget._amount);
 
