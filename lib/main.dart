@@ -1,8 +1,6 @@
 import 'package:dev_hampter/routes/routes.dart';
-import 'package:dev_hampter/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dev_hampter/routes/routes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 

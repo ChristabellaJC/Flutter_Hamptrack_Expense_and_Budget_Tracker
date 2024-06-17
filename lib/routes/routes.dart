@@ -23,29 +23,29 @@ class RoutesClass {
   static List<GetPage> routes = [
     GetPage(
       name: splashScreen,
-      page: () => SplashScreenPage(),
+      page: () => const SplashScreenPage(),
     ),
     GetPage(
       name: welcomePage,
-      page: () => WelcomePage(),
+      page: () => const WelcomePage(),
       transition: Transition.fadeIn,
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: signInPage,
-      page: () => SignInPage(),
+      page: () => const SignInPage(),
     ),
     GetPage(
       name: signUpPage,
-      page: () => SignUpPage(),
+      page: () => const SignUpPage(),
     ),
     GetPage(
       name: homePage,
-      page: () => HomePage(),
+      page: () => const HomePage(),
     ),
     GetPage(
       name: termsOfServicePage,
-      page: () => TermsOfServicePage(),
+      page: () => const TermsOfServicePage(),
     ),
   ];
 }

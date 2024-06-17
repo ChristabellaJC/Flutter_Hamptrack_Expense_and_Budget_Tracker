@@ -220,7 +220,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: .5,
                         ),
                         Text(
@@ -283,7 +283,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 alignment: Alignment.center,
                 child: Text(
                   errorMessage!,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
           ],
