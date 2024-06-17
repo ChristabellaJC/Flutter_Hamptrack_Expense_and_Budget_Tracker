@@ -146,7 +146,7 @@ class _SignInPageState extends State<SignInPage> {
                     CustomButton(
                       enabledText: 'Sign In',
                       onPressed: () {
-                        Get.toNamed(RoutesClass.navBar);
+                        Get.toNamed(RoutesClass.homePage);
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),
