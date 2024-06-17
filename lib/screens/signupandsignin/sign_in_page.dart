@@ -73,7 +73,7 @@ class _SignInPageState extends State<SignInPage> {
           await Auth().signOut(); // Sign out if username is incorrect
         }
       } else {
-        Get.toNamed(RoutesClass.homePage);
+        Get.toNamed(RoutesClass.navBar);
       }
     } on FirebaseAuthException catch (e) {
       Get.snackbar(

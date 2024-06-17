@@ -92,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
         password: user.password,
       );
       // Navigate to the home page after successful sign up
-      Get.toNamed(RoutesClass.homePage);
+      Get.toNamed(RoutesClass.navBar);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
