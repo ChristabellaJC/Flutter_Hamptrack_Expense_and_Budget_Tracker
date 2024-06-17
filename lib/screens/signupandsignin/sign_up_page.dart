@@ -155,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     CustomButton(
                       enabledText: 'Sign Up',
                       onPressed: () {
-                        Get.toNamed(RoutesClass.homePage);
+                        Get.toNamed(RoutesClass.navBar);
                       },
                       borderRadius: BorderRadius.circular(20),
                     ),
