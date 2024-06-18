@@ -190,7 +190,7 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomCheckBox(
+                        const CustomCheckBox(
                           scaleSize: 1.0,
                           value: isTOSChecked,
                           onChanged: (value) {
