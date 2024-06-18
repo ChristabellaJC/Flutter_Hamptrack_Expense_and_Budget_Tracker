@@ -42,7 +42,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           _emailController.text = userData['Email'];
           _passwordController.text = userData['Password'];
           _userId = user.uid;
-          print('User data: $userData');
         }
       }
     } catch (e) {
