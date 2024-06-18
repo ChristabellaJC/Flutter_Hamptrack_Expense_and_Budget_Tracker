@@ -1,5 +1,4 @@
 import 'package:dev_hampter/utils/colors.dart';
-import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatefulWidget {

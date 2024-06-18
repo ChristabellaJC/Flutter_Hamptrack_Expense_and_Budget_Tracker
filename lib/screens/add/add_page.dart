@@ -1,4 +1,7 @@
 import 'package:dev_hampter/components/buttons.dart';
+import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/functions/authentication/auth.dart';
+import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:dev_hampter/utils/uni_vars.dart';
@@ -6,16 +9,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({super.key});
+  const AddPage({Key? key}) : super(key: key);
 
   @override
   State<AddPage> createState() => _AddPageState();
 }
 
 class _AddPageState extends State<AddPage> {
+  final FirestoreService firestoreService = FirestoreService();
+  String userID = '';
   bool type = false;
+  bool isLoading = true;
   final _dateController = TextEditingController();
   final _amountController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _noteController = TextEditingController();
+  final GlobalKey<DropDownFieldCustomState> dropdownFieldCustomKey =
+      GlobalKey<DropDownFieldCustomState>();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserID();
+  }
+
+  Future<void> fetchUserID() async {
+    try {
+      final auth = Auth();
+      final user = auth.currentUser;
+      if (user != null) {
+        final userDoc = await auth.getUserByEmail(user.email!);
+        final userData = userDoc.data();
+        if (userData != null) {
+          setState(() {
+            userID = userData['id'];
+            isLoading = false;
+          });
+        }
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   void _toggleButtonA() {
     setState(() {
@@ -26,6 +64,51 @@ class _AddPageState extends State<AddPage> {
   void _toggleButtonB() {
     setState(() {
       type = true;
+    });
+  }
+
+  void _submitData() {
+    // Convert amount to integer
+    int? amount = int.tryParse(_amountController.text);
+    if (amount == null) {
+      // Handle invalid amount
+      print('Invalid amount');
+      return;
+    }
+
+    // Get selected category ID
+    int? categoryId =
+        dropdownFieldCustomKey.currentState?.getSelectedCategoryId();
+    if (categoryId == null) {
+      // Handle no category selected
+      print('No category selected');
+      return;
+    }
+
+    // Convert date string to DateTime
+    DateTime? date = DateTime.tryParse(_dateController.text);
+    if (date == null) {
+      // Handle invalid date
+      print('Invalid date');
+      return;
+    }
+
+    // Add data to Firestore
+    firestoreService
+        .addData(
+      userID, // Pass the user ID
+      _noteController.text,
+      date,
+      type,
+      amount,
+      categoryId,
+    )
+        .then((_) {
+      // Handle successful data submission
+      print('Data submitted successfully');
+    }).catchError((error) {
+      // Handle errors
+      print('Error submitting data: $error');
     });
   }
 
@@ -126,23 +209,46 @@ class _AddPageState extends State<AddPage> {
                           ],
                         ),
                       ),
-                      Text(''),
-                      TextField(
-                        controller: _dateController,
-                        decoration: const InputDecoration(
-                          labelText: 'DATE',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue)),
-                        ),
-                        readOnly: true,
+                      SizedBox(
+                        height: height * .02,
+                      ),
+                      CustomTextFieldEmpty(
+                        icon: Icons.calendar_today_outlined,
+                        text: 'Date',
+                        hint: 'YYYY/MM/DD',
                         onTap: () {
                           _selectDate();
                         },
+                        textController: _dateController,
                       ),
+                      SizedBox(
+                        height: height * .02,
+                      ),
+                      DropDownFieldCustom(
+                        key: dropdownFieldCustomKey,
+                        type: type,
+                        width: width * .9,
+                        text: 'Category',
+                        icon: Icons.widgets,
+                        categoryController: _categoryController,
+                      ),
+                      SizedBox(
+                        height: height * .02,
+                      ),
+                      CustomTextFieldEmpty(
+                        icon: Icons.note_alt_outlined,
+                        text: 'Note',
+                        hint: 'Notes...',
+                        textController: _noteController,
+                      ),
+                      SizedBox(
+                        height: height * .05,
+                      ),
+                      CustomButton(
+                        enabledText: 'Submit',
+                        onPressed: _submitData,
+                        borderRadius: BorderRadius.circular(20),
+                      )
                     ],
                   ),
                 ),
@@ -162,28 +268,30 @@ class _AddPageState extends State<AddPage> {
       lastDate: DateTime(2100),
       builder: (context, child) {
         return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.dark(
-                  primary: primaryColor, // header background color
-                  onPrimary: whiteColor, // header text color
-                  onSurface: textColor, // body text color
-                  onSecondary: textColor,
-                  surface: secondaryColor,
-                  secondary: textColor),
-              dialogBackgroundColor: Colors.white,
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(
-                    color: primaryColor,
-                    fontFamily: 'BalooThambi2',
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  foregroundColor: primaryColor, // button text color
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor,
+              onPrimary: whiteColor,
+              onSurface: textColor,
+              onSecondary: textColor,
+              surface: secondaryColor,
+              secondary: textColor,
+            ),
+            dialogBackgroundColor: whiteColor,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: primaryColor,
+                  fontFamily: 'BalooThambi2',
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
                 ),
+                foregroundColor: primaryColor,
               ),
             ),
-            child: child!);
+          ),
+          child: child!,
+        );
       },
     );
 
