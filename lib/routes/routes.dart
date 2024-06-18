@@ -4,6 +4,7 @@ import "package:dev_hampter/screens/sign_in_page.dart";
 import "package:dev_hampter/screens/splash_screen.dart";
 import "package:dev_hampter/screens/terms_of_service.dart";
 import "package:dev_hampter/screens/welcome_page.dart";
+import "package:dev_hampter/screens/edit_user_page.dart";
 import "package:get/get.dart";
 
 class RoutesClass {
@@ -13,12 +14,15 @@ class RoutesClass {
   static String signUpPage = "/signUpPage";
   static String homePage = "/homePage";
   static String termsOfServicePage = "/termsOfServicePage";
+  static String editUserPage = "/editUserPage";
 
   static String getSplashRoute() => splashScreen;
   static String getWelcomePage() => welcomePage;
   static String getSignInPage() => signInPage;
   static String getHomePage() => homePage;
   static String getTermsOfServicePage() => termsOfServicePage;
+  static String getEditUserPage() => editUserPage;
+  
 
   static List<GetPage> routes = [
     GetPage(
@@ -27,7 +31,7 @@ class RoutesClass {
     ),
     GetPage(
       name: welcomePage,
-      page: () => const WelcomePage(),
+      page: () => const HomePage(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500),
     ),
@@ -46,6 +50,10 @@ class RoutesClass {
     GetPage(
       name: termsOfServicePage,
       page: () => const TermsOfServicePage(),
+    ),
+    GetPage(
+      name: editUserPage,
+      page: () => const EditUserPage(),
     ),
   ];
 }

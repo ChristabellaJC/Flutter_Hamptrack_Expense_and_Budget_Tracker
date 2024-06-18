@@ -14,6 +14,7 @@ var strokeColor = const Color(0xFFF9DC5C);
 var shadowColor = const Color.fromARGB(125, 70, 60, 7);
 
 var errorColor = Colors.red;
+var borderColor = const Color(0xFFE0AC00);
 
 // GRAPH
 var greenCol = const Color(0xFF06D6A0);
