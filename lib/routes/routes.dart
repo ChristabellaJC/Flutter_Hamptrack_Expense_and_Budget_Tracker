@@ -10,7 +10,6 @@ import "package:dev_hampter/screens/signupandsignin/sign_in_page.dart";
 import "package:dev_hampter/screens/splashscreens/splash_screen.dart";
 import "package:dev_hampter/screens/signupandsignin/terms_of_service.dart";
 import "package:dev_hampter/screens/splashscreens/welcome_page.dart";
-import "package:dev_hampter/screens/edit_user_page.dart";
 import "package:get/get.dart";
 
 class RoutesClass {
@@ -91,10 +90,6 @@ class RoutesClass {
     GetPage(
       name: navBar,
       page: () => const NavBar(),
-    ),
-    GetPage(
-      name: editUserPage,
-      page: () => const EditUserPage(),
     ),
   ];
 }
