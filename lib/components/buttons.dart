@@ -122,3 +122,69 @@ class _CustomTextButtonState extends State<CustomTextButton> {
     );
   }
 }
+
+class ButtonToggleExample extends StatefulWidget {
+  final bool type;
+  final VoidCallback toggleButtonA;
+  final VoidCallback toggleButtonB;
+
+  const ButtonToggleExample({
+    Key? key,
+    required this.type,
+    required this.toggleButtonA,
+    required this.toggleButtonB,
+  }) : super(key: key);
+
+  @override
+  _ButtonToggleExampleState createState() => _ButtonToggleExampleState();
+}
+
+class _ButtonToggleExampleState extends State<ButtonToggleExample> {
+  @override
+  Widget build(BuildContext context) {
+    Color buttonAColor = widget.type ? secondaryColor : primaryColor;
+    Color buttonBColor = widget.type ? primaryColor : secondaryColor;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ElevatedButton(
+          onPressed: widget.toggleButtonA,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonAColor,
+            elevation: 0,
+            fixedSize: Size(150, 50),
+            side: BorderSide(color: primaryColor),
+          ),
+          child: Text(
+            'Income',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              fontSize: 20,
+              color: textColor,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: widget.toggleButtonB,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonBColor,
+            elevation: 0,
+            fixedSize: Size(150, 50),
+            side: BorderSide(color: primaryColor),
+          ),
+          child: Text(
+            'Expense',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              fontSize: 20,
+              color: textColor,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
