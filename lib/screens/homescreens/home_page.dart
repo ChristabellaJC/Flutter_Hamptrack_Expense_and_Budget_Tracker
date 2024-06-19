@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
     fetchUsername();
   }
 
-// Inside _HomePageState class
   void _handleDateSelected(DateTime selectedDate) {
     setState(() {
       this.selectedDate = selectedDate;
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         if (userData != null) {
           setState(() {
             username = userData['Username'];
-            userID = userData['id'];
+            userID = userData['id'] ?? '';
             isLoading = false;
           });
         }
@@ -60,6 +59,41 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  void _deleteData(String docId) async {
+    try {
+      await firestoreService.deleteData(userID, docId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: greenCol,
+          content: Text(
+            'Data deleted successfully',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'Failed to delete data: $e',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -234,32 +268,49 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
 
-                          // If we reach here, we have data
                           List<DocumentSnapshot> data = snapshot.data!.docs;
+
+                          if (data.isEmpty) {
+                            return Center(
+                              child: Text(
+                                'No Data Yet!',
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
 
                           return ListView.separated(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: data.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    SizedBox(height: 10),
-                            itemBuilder: (BuildContext context, int index) {
-                              Map<String, dynamic> dataMap =
-                                  data[index].data() as Map<String, dynamic>;
-                              int amount = dataMap['Amount'];
-                              bool type = dataMap['Type'];
-                              DateTime date = dataMap['Date'].toDate();
+                            separatorBuilder: (context, index) => Divider(),
+                            itemBuilder: (context, index) {
+                              var doc = data[index];
+                              var docId = doc.id;
+                              var amount = doc['Amount'];
+                              var type = doc['Type'];
+                              var date = (doc['Date'] as Timestamp).toDate();
+                              var note = doc['Note'];
+                              var category = doc['Category'];
 
                               return CustomBlock(
                                 amount: amount,
+                                category: category,
                                 type: type,
                                 date: date,
+                                note: note,
+                                docId: docId,
+                                onDelete: _deleteData,
+                                userId: userID, // Pass the userID here
                               );
                             },
                           );
                         },
-                      ),
+                      )
                     ],
                   ),
                 ),

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({Key? key}) : super(key: key);
+  const AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();
