@@ -61,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
         final userData = userDoc.data();
         if (userData != null &&
             userData['Username'] == _usernameController.text) {
-          Get.toNamed(RoutesClass.homePage);
+          Get.toNamed(RoutesClass.navBar);
         } else {
           Get.snackbar(
             "Error",
@@ -190,7 +190,7 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomCheckBox(
+                        CustomCheckBox(
                           scaleSize: 1.0,
                           value: isTOSChecked,
                           onChanged: (value) {

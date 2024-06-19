@@ -210,7 +210,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomCheckBox(
+                        CustomCheckBox(
                           scaleSize: 1.0,
                           value: isTOSChecked,
                           onChanged: (value) {

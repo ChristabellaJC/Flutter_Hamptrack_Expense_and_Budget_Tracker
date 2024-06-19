@@ -1,4 +1,6 @@
 import 'package:dev_hampter/screens/account/account_page.dart';
+import 'package:dev_hampter/screens/account/account_settings_page.dart';
+
 import 'package:dev_hampter/screens/add/add_page.dart';
 import 'package:dev_hampter/screens/homescreens/details_page.dart';
 import 'package:dev_hampter/screens/homescreens/home_page.dart';
@@ -63,6 +65,6 @@ class NavController extends GetxController {
     const HomePage(),
     const AddPage(),
     const DetailsPage(),
-    const AccountPage(),
+    const AccountSettingsPage(),
   ];
 }
