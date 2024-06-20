@@ -67,12 +67,26 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
-  void _submitData() {
+  void _submitData(BuildContext context) {
     // Convert amount to integer
     int? amount = int.tryParse(_amountController.text);
     if (amount == null) {
       // Handle invalid amount
       print('Invalid amount');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'Invalid Amount',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
       return;
     }
 
@@ -82,6 +96,20 @@ class _AddPageState extends State<AddPage> {
     if (categoryId == null) {
       // Handle no category selected
       print('No category selected');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'No Category Selected',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
       return;
     }
 
@@ -90,6 +118,20 @@ class _AddPageState extends State<AddPage> {
     if (date == null) {
       // Handle invalid date
       print('Invalid date');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'Invalid Date',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
       return;
     }
 
@@ -106,9 +148,37 @@ class _AddPageState extends State<AddPage> {
         .then((_) {
       // Handle successful data submission
       print('Data submitted successfully');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: greenCol,
+          content: Text(
+            'Data submitted succesfully',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
     }).catchError((error) {
       // Handle errors
       print('Error submitting data: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'Error submitting data: $error',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
     });
   }
 
@@ -246,7 +316,7 @@ class _AddPageState extends State<AddPage> {
                       ),
                       CustomButton(
                         enabledText: 'Submit',
-                        onPressed: _submitData,
+                        onPressed: () => _submitData(context),
                         borderRadius: BorderRadius.circular(20),
                       )
                     ],

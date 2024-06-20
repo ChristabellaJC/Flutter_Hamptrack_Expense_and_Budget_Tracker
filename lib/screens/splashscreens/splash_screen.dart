@@ -18,13 +18,13 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 5), () {
       setState(() {
         _visible = !_visible;
       });
     });
 
-    Timer(const Duration(milliseconds: 800), () {
+    Timer(const Duration(seconds: 5), () {
       Get.toNamed(RoutesClass.getWelcomePage());
     });
   }
@@ -76,7 +76,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               ),
               StrokeText(
                 textAlign: TextAlign.center,
-                text: "HampTrack",
+                text: "Dev_Hampter",
                 textStyle: TextStyle(
                   fontFamily: 'BalooThambi2',
                   fontSize: 25,

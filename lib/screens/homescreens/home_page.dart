@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Image.asset(
                         mouState(),
-                        height: 150,
+                        height: 200,
                       ),
                       Text(
                         'Mou',
