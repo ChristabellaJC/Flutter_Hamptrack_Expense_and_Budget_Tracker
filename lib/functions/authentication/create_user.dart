@@ -25,9 +25,6 @@ Future<void> createUser(UserModel user) async {
     );
 
     await userRepo.createUser(newUser);
-
-    // Navigate to the home page after successful sign up
-    Get.toNamed(RoutesClass.homePage);
   } catch (e) {
     print(e.toString());
     Get.snackbar("Error", "Could not create account",
