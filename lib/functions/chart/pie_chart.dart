@@ -10,34 +10,44 @@ enum CategoryExpense {
     'Transportation',
     Icons.directions_bus_filled_outlined,
     1,
-    Colors.blue,
+    Color(0xFF06D6A0),
   ),
   foodanddrinks(
     'Food and Drinks',
     Icons.fastfood,
     2,
-    Colors.red,
+    Color(0xFF086788),
   ),
   essentials(
     'Essentials',
     Icons.favorite,
     3,
-    Colors.green,
+    Color(0xFF25CBE5),
   ),
   hygiene(
     'Hygiene',
     Icons.health_and_safety_outlined,
     4,
-    Colors.yellow,
+    Color(0xFFEF476F),
   ),
   hobbies(
     'Hobbies',
     Icons.sports_esports_outlined,
     5,
-    Colors.orange,
+    Color(0xFFFFD166),
   ),
-  salary('Salary', Icons.payments_outlined, 6, Colors.purple),
-  bonus('Bonus', Icons.local_mall_outlined, 7, Colors.pink);
+  salary(
+    'Salary',
+    Icons.payments_outlined,
+    6,
+    Color(0xFF8338EC)
+    ),
+  bonus(
+    'Bonus',
+    Icons.local_mall_outlined,
+    7,
+    Color(0xFFFB5607)
+    );
 
   const CategoryExpense(this.label, this.icon, this.id, this.color);
   final String label;
@@ -180,8 +190,8 @@ class PieChart2State extends State<PieChartSample2> {
           titleStyle: TextStyle(
             fontSize: touchedIndex == category.id ? 25.0 : 16.0,
             fontWeight: FontWeight.bold,
-            color: primaryColor,
-            shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+            color: whiteColor,
+            shadows: [Shadow(color: shadowColor, blurRadius: 2)],
           ),
         ),
       );

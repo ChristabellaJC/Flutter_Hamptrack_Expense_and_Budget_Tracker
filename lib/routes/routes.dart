@@ -3,7 +3,6 @@ import "package:dev_hampter/screens/account/about_page.dart";
 import "package:dev_hampter/screens/account/account_page.dart";
 import "package:dev_hampter/screens/account/account_settings_page.dart";
 import "package:dev_hampter/screens/account/editbudget.dart";
-import "package:dev_hampter/screens/add/add_details_page.dart";
 import "package:dev_hampter/screens/homescreens/details_page.dart";
 import "package:dev_hampter/screens/homescreens/home_page.dart";
 import "package:dev_hampter/screens/signupandsignin/sign_up_page.dart";
@@ -75,10 +74,6 @@ class RoutesClass {
     //   name: addPage,
     //   page: () => const AddPage(),
     // ),
-    GetPage(
-      name: addDetailsPage,
-      page: () => const AddDetailsPage(),
-    ),
     GetPage(
       name: detailsPage,
       page: () => const DetailsPage(),
