@@ -4,6 +4,7 @@ import 'package:dev_hampter/components/bottomnavbar.dart';
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:get/get.dart';
 import 'package:dev_hampter/utils/sizes.dart';
+import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:flutter/services.dart';
 
 
@@ -88,7 +89,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Rp ",
+                                    symbol,
                                     style: TextStyle(
                                       fontFamily: 'BalooThambi2',
                                       fontSize: 25,
