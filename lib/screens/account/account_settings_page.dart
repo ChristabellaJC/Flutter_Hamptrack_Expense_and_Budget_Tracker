@@ -1,3 +1,4 @@
+import 'package:dev_hampter/components/bottomnavbar.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,10 +6,6 @@ import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:dev_hampter/components/settingfields.dart';
 import 'package:dev_hampter/components/buttons.dart';
-// import 'package:dev_hampter/routes/routes.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:dev_hampter/functions/data/firestore.dart';
 
 class AccountSettingsPage extends StatefulWidget {
   const AccountSettingsPage({super.key});
@@ -19,8 +16,6 @@ class AccountSettingsPage extends StatefulWidget {
 
 class _AccountSettingsPageState extends State<AccountSettingsPage> {
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   double height = 0, width = 0;
   String _userId = '';
 
@@ -39,8 +34,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
         final userData = userDoc.data();
         if (userData != null) {
           _usernameController.text = userData['Username'];
-          _emailController.text = userData['Email'];
-          _passwordController.text = userData['Password'];
           _userId = user.uid;
         }
       }
@@ -61,15 +54,13 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
         if (userData != null) {
           final updatedUserData = {
             'Username': _usernameController.text.trim(),
-            'Email': _emailController.text.trim(),
-            'Password': _passwordController.text.trim(),
           };
 
           await auth.updateUserData(_userId, updatedUserData);
 
           Get.snackbar(
             "Success",
-            "User data updated successfully",
+            "Username updated successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: primaryColor,
             colorText: textColor,
@@ -126,16 +117,16 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             children: [
                               Stack(
                                 children: [
-                                  // IconButton(
-                                  //   onPressed: () {
-                                  //     Get.back();
-                                  //   },
-                                  //   icon: Icon(
-                                  //     Icons.highlight_off,
-                                  //     color: iconColor,
-                                  //     size: 40,
-                                  //   ),
-                                  // ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Get.to(() => NavBar());
+                                    },
+                                    icon: Icon(
+                                      Icons.highlight_off,
+                                      color: iconColor,
+                                      size: 40,
+                                    ),
+                                  ),
                                   Container(
                                     alignment: Alignment.center,
                                     child: Text(
@@ -155,14 +146,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               SettingFields(
                                   label: 'Username',
                                   controller: _usernameController),
-                              // const SizedBox(height: 16),
-                              // SettingFields(
-                              //     label: 'Email', controller: _emailController),
-                              // const SizedBox(height: 16),
-                              // SettingFields(
-                              //     label: 'Password',
-                              //     controller: _passwordController,
-                              //     isObscured: true),
                               const SizedBox(height: 32),
                               Center(
                                 child: CustomButton(
@@ -171,12 +154,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              CustomTextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  text: 'Logout',
-                                  textColor: primaryColor),
                             ],
                           ),
                         ),
