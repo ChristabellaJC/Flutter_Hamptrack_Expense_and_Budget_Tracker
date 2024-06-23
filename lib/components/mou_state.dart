@@ -1,6 +1,5 @@
-import 'package:dev_hampter/utils/uni_vars.dart';
 
-String mouCondition() {
+String mouCondition(budget) {
   if (budget >= 0.7 && budget <= 1) {
     return 'Feeling Happy!';
   } else if (budget >= 0.4 && budget < 0.7) {
@@ -14,7 +13,7 @@ String mouCondition() {
   }
 }
 
-String mouState() {
+String mouState(budget) {
   if (budget >= 0.7 && budget <= 1) {
     return 'assets/images/mous/mouA.png';
   } else if (budget >= 0.4 && budget < 0.7) {
