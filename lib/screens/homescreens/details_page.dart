@@ -147,6 +147,14 @@ class _DetailsPageState extends State<DetailsPage> {
                           text: 'Budget',
                           amount: monthlyBudget,
                         ),
+                        SizedBox(
+                          height: height * 0.2, // Adjust the height as needed
+                        ),
+                        PieChartSample2(
+                          userId: userID,
+                          selectedDate: selectedDate,
+                        ),
+                        SizedBox(height: height * .02),
                         StreamBuilder<QuerySnapshot>(
                           stream: firestoreService.getDataStream(
                               userID, selectedDate),

@@ -6,13 +6,12 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "your_api_key",
-      appId: "your_app_id",
-      messagingSenderId: "your_messaging_sender_id",
-      projectId: "your_project_id",
-    ),
-  );
+      options: const FirebaseOptions(
+    apiKey: "AIzaSyDt6HtG2GTAP2tKCNfbXOyO7Ahwt6RDTls",
+    appId: "1:413732506963:android:ff0ab03b35af123864e5a6",
+    messagingSenderId: "413732506963",
+    projectId: "hamptrack",
+  ));
 
   runApp(const MyApp());
 }
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'BalooThambi2',
-        // Define your app's theme here
       ),
       initialRoute: RoutesClass.splashScreen,
       getPages: RoutesClass.routes,
