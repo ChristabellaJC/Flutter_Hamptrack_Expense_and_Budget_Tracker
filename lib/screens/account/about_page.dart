@@ -1,6 +1,5 @@
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:stroke_text/stroke_text.dart';
 import 'package:dev_hampter/components/bottomnavbar.dart';
 import 'package:dev_hampter/components/featureItem.dart';
 
@@ -55,20 +54,17 @@ class _AboutPageState extends State<AboutPage> {
 
                       Container(
                         alignment: Alignment.center,
-                        child:
-                          StrokeText(
-                          text: 'About Us',
+                        child: Text(
+                          'About Us',
                           textAlign: TextAlign.center,
-                          textStyle: TextStyle(
-                            fontFamily: 'BalooThambi2',
+                          style: TextStyle(
                             fontSize: 40,
-                            color: secTextColor,
+                            fontFamily: 'BalooThambi2',
                             fontWeight: FontWeight.w800,
-                          ),
-                          strokeColor: whiteColor,
-                          strokeWidth: 5,
+                            color: textColor,
                           ),
                         ),
+                      )
                     ],
                   ),
                   Expanded(
