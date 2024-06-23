@@ -44,12 +44,12 @@ enum CategoryIncome {
   salary(
     'Salary',
     Icons.payments_outlined,
-    1,
+    6,
   ),
   bonus(
     'Bonus',
     Icons.local_mall_outlined,
-    2,
+    7,
   );
 
   final String label;

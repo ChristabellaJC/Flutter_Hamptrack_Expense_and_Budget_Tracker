@@ -69,14 +69,6 @@ class RoutesClass {
       name: termsOfServicePage,
       page: () => const TermsOfServicePage(),
     ),
-    // GetPage(    // GetPage(
-    //   name: addDetailsPage,
-    //   page: () => const AddDetailsPage(),
-    // ),
-    //   name: addPage,
-    //   page: () => const AddPage(),
-    // ),
-
     GetPage(
       name: detailsPage,
       page: () => const DetailsPage(),
