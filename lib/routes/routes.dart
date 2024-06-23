@@ -2,6 +2,7 @@ import "package:dev_hampter/components/bottomnavbar.dart";
 import "package:dev_hampter/screens/account/about_page.dart";
 import "package:dev_hampter/screens/account/account_page.dart";
 import "package:dev_hampter/screens/account/account_settings_page.dart";
+import "package:dev_hampter/screens/account/editbudget.dart";
 import "package:dev_hampter/screens/add/add_details_page.dart";
 import "package:dev_hampter/screens/homescreens/details_page.dart";
 import "package:dev_hampter/screens/homescreens/home_page.dart";
@@ -27,6 +28,7 @@ class RoutesClass {
   static String accountSettingsPage = "/accountSettingsPage";
   static String navBar = "/navBar";
   static String aboutPage = "/aboutPage";
+  static String editBudgetPage = "/editBudgetPage";
 
   static String getSplashRoute() => splashScreen;
   static String getWelcomePage() => welcomePage;
@@ -40,6 +42,7 @@ class RoutesClass {
   static String getAccountSettingsPage() => accountSettingsPage;
   static String getNavBar() => navBar;
   static String getAboutPage() => aboutPage;
+  static String getEditBudgetPage() => editBudgetPage;
 
   static List<GetPage> routes = [
     GetPage(
@@ -95,6 +98,10 @@ class RoutesClass {
     GetPage(
       name: aboutPage,
       page: () => const AboutPage(),
+    ),
+    GetPage(
+      name: editBudgetPage,
+      page: () => const EditBudgetPage(),
     ),
   ];
 }

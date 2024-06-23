@@ -3,6 +3,7 @@ import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/screens/account/account_settings_page.dart';
 import 'package:dev_hampter/screens/signupandsignin/sign_in_page.dart';
 import 'package:dev_hampter/screens/account/about_page.dart';
+import 'package:dev_hampter/screens/account/editbudget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dev_hampter/utils/colors.dart';
@@ -139,7 +140,9 @@ class _AccountPageState extends State<AccountPage> {
 
                         CustomButton(
                           enabledText: 'Edit Budget', 
-                          onPressed: (){}, 
+                          onPressed: (){
+                            Get.to(() => EditBudgetPage());
+                          }, 
                           borderRadius: BorderRadius.circular(10), 
                           gradient: LinearGradient(colors: [primaryColor, primaryColor]),
                           width: width * .8,
