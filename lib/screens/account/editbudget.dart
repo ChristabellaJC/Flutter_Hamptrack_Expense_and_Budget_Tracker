@@ -206,15 +206,6 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                                           fontWeight: FontWeight.bold,
                                           color: whiteColor,
                                         ),
-                                        onChanged: (value) {
-                                          final numericValue = int.tryParse(value.replaceAll('.', ''));
-                                          if (numericValue != null) {
-                                            _amountController.value = TextEditingValue(
-                                              text: _numberFormat.format(numericValue),
-                                              selection: TextSelection.collapsed(offset: _numberFormat.format(numericValue).length),
-                                            );
-                                          }
-                                        },
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           focusedBorder: InputBorder.none,

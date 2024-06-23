@@ -7,7 +7,6 @@ import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/components/mou_state.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
-import 'package:dev_hampter/utils/uni_vars.dart';
 
 void main() => runApp(const HomePage());
 
@@ -23,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   String username = '';
   String userID = '';
   bool isLoading = true;
-  double budget = 0.0; // This will hold the user's set budget
+  double userBudget = 0; // This will hold the user's set budget
   double totalExpenses = 0.0; // Sum of all expenses
   FirestoreService firestoreService = FirestoreService();
 
@@ -118,6 +117,7 @@ class _HomePageState extends State<HomePage> {
         if (userData != null) {
           String userID = userData['id'];
 
+
           // Get current month's start and end dates
           DateTime now = DateTime.now();
           DateTime startOfMonth = DateTime(now.year, now.month, 1);
@@ -131,9 +131,22 @@ class _HomePageState extends State<HomePage> {
               .collection('Data');
 
           final expensesQuery = await expensesCollection
+              .where('Type', isEqualTo: true)
               .where('Date', isGreaterThanOrEqualTo: startOfMonth)
               .where('Date', isLessThanOrEqualTo: endOfMonth)
               .get();
+
+          //fetch user budget
+          final userBudgetDoc = await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(userID)
+              .get();
+
+          if (userBudgetDoc.exists && userBudgetDoc.data() != null && userBudgetDoc.data()!['Budget'] != null) {
+            setState(() {
+              userBudget = (userBudgetDoc.data()!['Budget'] as num).toDouble();
+            });
+          }
 
           // Calculate total expenses
           int total = 0;
@@ -157,12 +170,26 @@ class _HomePageState extends State<HomePage> {
 
   // Function to calculate percentage spent
   double calculateBudgetPercentage() {
-    if (budget == 0.0) {
+    if (userBudget <= 0.0 || totalExpenses < 0.0) {
       return 0.0;
     }
-    return (totalExpenses / budget) * 100;
+
+    double percentage = (userBudget - totalExpenses) / userBudget;
+
+    // Ensure the percentage is within the valid range
+    if (percentage.isNaN) {
+      return 0.0;
+    } else if (percentage < 0.0) {
+      return 0.0;
+    } else if (percentage > 1.0) {
+      return 1.0;
+    }
+    return percentage;
   }
 
+
+
+  
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
