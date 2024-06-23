@@ -50,6 +50,7 @@ dependencies:
   stroke_text: any
   zoom_tap_animation: ^1.1.0
   dropdown_textfield: ^1.1.0
+  fl_chart: ^0.68.0
 
 dev_dependencies:
   flutter_test:

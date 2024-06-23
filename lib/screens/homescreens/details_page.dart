@@ -7,6 +7,7 @@ import 'package:dev_hampter/components/dates.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:dev_hampter/utils/uni_vars.dart';
+import 'package:dev_hampter/functions/chart/pie_chart.dart';
 
 void main() => runApp(const DetailsPage());
 
@@ -141,6 +142,17 @@ class _DetailsPageState extends State<DetailsPage> {
                         HorizontalCalendar(
                           onDateSelected: _handleDateSelected,
                         ),
+                        CustomBlockTwo(
+                            icon: Icons.account_balance_outlined,
+                            text: 'Budget'),
+                        SizedBox(
+                          height: height * 0.2, // Adjust the height as needed
+                        ),
+                        PieChartSample2(
+                          userId: userID,
+                          selectedDate: selectedDate,
+                        ),
+                        SizedBox(height: height * .02),
                         StreamBuilder<QuerySnapshot>(
                           stream: firestoreService.getDataStream(
                               userID, selectedDate),
@@ -202,9 +214,6 @@ class _DetailsPageState extends State<DetailsPage> {
                             );
                           },
                         ),
-                        CustomBlockTwo(
-                            icon: Icons.account_balance_outlined,
-                            text: 'Budget')
                       ],
                     ),
                   ),
