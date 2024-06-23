@@ -143,8 +143,10 @@ class _DetailsPageState extends State<DetailsPage> {
                           onDateSelected: _handleDateSelected,
                         ),
                         CustomBlockTwo(
-                            icon: Icons.account_balance_outlined,
-                            text: 'Budget'),
+                          icon: Icons.account_balance_outlined,
+                          text: 'Budget',
+                          amount: monthlyBudget,
+                        ),
                         SizedBox(
                           height: height * 0.2, // Adjust the height as needed
                         ),
@@ -186,31 +188,37 @@ class _DetailsPageState extends State<DetailsPage> {
                               );
                             }
 
-                            return ListView.separated(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: data.length,
-                              separatorBuilder: (context, index) => Divider(),
-                              itemBuilder: (context, index) {
-                                var doc = data[index];
-                                var docId = doc.id;
-                                var amount = doc['Amount'];
-                                var type = doc['Type'];
-                                var date = (doc['Date'] as Timestamp).toDate();
-                                var note = doc['Note'];
-                                var category = doc['Category'];
+                            return Column(
+                              children: [
+                                ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: data.length,
+                                  separatorBuilder: (context, index) =>
+                                      Divider(),
+                                  itemBuilder: (context, index) {
+                                    var doc = data[index];
+                                    var docId = doc.id;
+                                    var amount = doc['Amount'];
+                                    var type = doc['Type'];
+                                    var date =
+                                        (doc['Date'] as Timestamp).toDate();
+                                    var note = doc['Note'];
+                                    var category = doc['Category'];
 
-                                return CustomBlock(
-                                  amount: amount,
-                                  category: category,
-                                  type: type,
-                                  date: date,
-                                  note: note,
-                                  docId: docId,
-                                  onDelete: _deleteData,
-                                  userId: userID, // Pass the userID here
-                                );
-                              },
+                                    return CustomBlock(
+                                      amount: amount,
+                                      category: category,
+                                      type: type,
+                                      date: date,
+                                      note: note,
+                                      docId: docId,
+                                      onDelete: _deleteData,
+                                      userId: userID, // Pass the userID here
+                                    );
+                                  },
+                                ),
+                              ],
                             );
                           },
                         ),

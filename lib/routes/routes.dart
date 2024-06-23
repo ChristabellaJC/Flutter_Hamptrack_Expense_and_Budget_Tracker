@@ -2,7 +2,6 @@ import "package:dev_hampter/components/bottomnavbar.dart";
 import "package:dev_hampter/screens/account/about_page.dart";
 import "package:dev_hampter/screens/account/account_page.dart";
 import "package:dev_hampter/screens/account/account_settings_page.dart";
-import "package:dev_hampter/screens/account/editbudget.dart";
 import "package:dev_hampter/screens/homescreens/details_page.dart";
 import "package:dev_hampter/screens/homescreens/home_page.dart";
 import "package:dev_hampter/screens/signupandsignin/sign_up_page.dart";
@@ -70,10 +69,6 @@ class RoutesClass {
       name: termsOfServicePage,
       page: () => const TermsOfServicePage(),
     ),
-    // GetPage(
-    //   name: addPage,
-    //   page: () => const AddPage(),
-    // ),
     GetPage(
       name: detailsPage,
       page: () => const DetailsPage(),
@@ -93,10 +88,6 @@ class RoutesClass {
     GetPage(
       name: aboutPage,
       page: () => const AboutPage(),
-    ),
-    GetPage(
-      name: editBudgetPage,
-      page: () => const EditBudgetPage(),
     ),
   ];
 }

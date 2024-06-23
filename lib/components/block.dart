@@ -420,10 +420,15 @@ class _CustomBlockState extends State<CustomBlock> {
 class CustomBlockTwo extends StatefulWidget {
   final IconData _icon;
   final String _text;
-  const CustomBlockTwo(
-      {super.key, required IconData icon, required String text})
-      : _icon = icon,
-        _text = text;
+  final int _amount;
+  const CustomBlockTwo({
+    super.key,
+    required IconData icon,
+    required String text,
+    required int amount,
+  })  : _icon = icon,
+        _text = text,
+        _amount = amount;
 
   @override
   State<CustomBlockTwo> createState() => _CustomBlockTwoState();
@@ -432,13 +437,26 @@ class CustomBlockTwo extends StatefulWidget {
 class _CustomBlockTwoState extends State<CustomBlockTwo> {
   @override
   Widget build(BuildContext context) {
+    String _formattedamount = NumberFormat.currency(
+      locale: locale,
+      symbol: symbol,
+      decimalDigits: 0,
+    ).format(widget._amount);
+
     return Container(
-      color: primaryColor,
+      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         children: [
           Container(
-            color: secondaryColor,
-            width: 80,
+            width: 60,
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Icon(
               widget._icon,
               color: primaryColor,
@@ -449,14 +467,24 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
             width: 20,
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget._text,
                 style: TextStyle(
                   fontFamily: 'BalooThambi2',
                   color: whiteColor,
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                _formattedamount,
+                style: TextStyle(
+                  fontFamily: 'BalooThambi2',
+                  color: whiteColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ],
