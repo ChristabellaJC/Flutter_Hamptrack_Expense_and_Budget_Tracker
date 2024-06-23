@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                         height: height * .1,
                       ),
                       Image.asset(
-                        mouState(),
+                        mouState(calculateBudgetPercentage()),
                         height: 200,
                       ),
                       Text(
@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Text(
-                        mouCondition(),
+                        mouCondition(calculateBudgetPercentage()),
                         style: TextStyle(
                           color: textColor,
                           fontFamily: 'BalooThambi2',
