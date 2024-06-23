@@ -1,4 +1,7 @@
+import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
+import 'package:dev_hampter/screens/account/account_settings_page.dart';
+import 'package:dev_hampter/screens/signupandsignin/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dev_hampter/utils/colors.dart';
@@ -17,16 +20,17 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   double height = 0, width = 0;
-  String? _username;
-  String? _email;
+  String username = '';
+  String email = '';
+  String userID = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    fetchUsername();
   }
 
-  Future<void> _loadUserData() async {
+  Future<void> fetchUsername() async {
     try {
       final auth = Auth();
       final user = auth.currentUser;
@@ -35,21 +39,23 @@ class _AccountPageState extends State<AccountPage> {
         final userData = userDoc.data();
         if (userData != null) {
           setState(() {
-            _username = userData['Username'];
-            _email = userData['Email'];
+            username = userData['Username'];
+            userID = userData['id'] ?? '';
+            email = userData['Email'] ?? '';
           });
         }
       }
     } catch (e) {
-      print('Error loading user data: $e');
+      print('Error fetching user data: $e');
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -58,33 +64,35 @@ class _AccountPageState extends State<AccountPage> {
     home: Scaffold(
       backgroundColor: primaryColor,
       body: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.fromLTRB(15, 90, 15, 40),
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.7,
-            color: Colors.transparent,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (_username != null)
+          children: [
+            Container(
+              width: width,
+              decoration: BoxDecoration(
+                color: primaryColor,
+              ),
+              child: Container(
+                padding: padding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: height * .02,
+                    ),
                     StrokeText(
-                      text: _username!,
+                      text: username,
                       textAlign: TextAlign.center,
                       textStyle: TextStyle(
                         fontFamily: 'BalooThambi2',
                         fontSize: 40,
                         color: whiteColor,
-                        fontWeight: FontWeight.w500,
-                        height: 0.1,
+                        fontWeight: FontWeight.bold,
                       ),
                       strokeColor: secTextColor,
                       strokeWidth: 5,
                     ),
-                  SizedBox(height: 16),
-                  if (_email != null)
+
                     StrokeText(
-                      text: _email!,
+                      text: email,
                       textAlign: TextAlign.center,
                       textStyle: TextStyle(
                         fontFamily: 'BalooThambi2',
@@ -95,55 +103,78 @@ class _AccountPageState extends State<AccountPage> {
                       strokeColor: secTextColor,
                       strokeWidth: 5,
                     ),
-            ],),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: padding,
-              height: height * .6,
-              width: width,
-              decoration: BoxDecoration(
-                color: secondaryColor,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  topLeft: Radius.circular(30),
+                  ],
                 ),
               ),
-              child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Get.back();
-                            }, 
-                            icon: Icon(
-                              Icons.highlight_off,
-                              color: iconColor,
-                              size: 40,
-                            ),
-                          ),
-                        ],
-                      ),
-                    
-
-
-                    ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: padding,
+                height: height * .7,
+                width: width,
+                decoration: BoxDecoration(
+                  color: secondaryColor,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    topLeft: Radius.circular(30),
                   ),
                 ),
-            ],)
-          ),
-          ),
-        ],
-        
-      )
-    ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+
+                      CustomButton(
+                          enabledText: 'Setting', 
+                          onPressed: (){
+                            Get.to(() => AccountSettingsPage());
+                          }, 
+                          borderRadius: BorderRadius.circular(10), 
+                          gradient: LinearGradient(colors: [primaryColor, primaryColor]),
+                          width: width * .8,
+                        ),
+
+                        SizedBox(height: 20),
+
+                        CustomButton(
+                          enabledText: 'Edit Budget', 
+                          onPressed: (){}, 
+                          borderRadius: BorderRadius.circular(10), 
+                          gradient: LinearGradient(colors: [primaryColor, primaryColor]),
+                          width: width * .8,
+                        ),
+
+                        SizedBox(height: 20),
+
+                        CustomButton(
+                          enabledText: 'About', 
+                          onPressed: (){}, 
+                          borderRadius: BorderRadius.circular(10), 
+                          gradient: LinearGradient(colors: [primaryColor, primaryColor]),
+                          width: width * .8,
+                        ),
+
+                        SizedBox(height: 20),
+
+                        CustomButton(
+                          enabledText: 'Logout', 
+                          onPressed: (){
+                            FirebaseAuth.instance.signOut();
+                            Get.to(() => SignInPage());
+                          }, 
+                          borderRadius: BorderRadius.circular(10), 
+                          gradient: LinearGradient(colors: [primaryColor, primaryColor]),
+                          width: width * .8,
+                        ),
+                    ]
+                  ),
+                  ),
+              )
+            )
+          ],
+        ),
+      ),
     );
   }
 }
