@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_hampter/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_hampter/components/bottomnavbar.dart';
 import 'package:dev_hampter/components/buttons.dart';
@@ -18,6 +20,48 @@ class EditBudgetPage extends StatefulWidget {
 class _EditBudgetPageState extends State<EditBudgetPage> {
   double height = 0, width = 0;
   final _amountController = TextEditingController();
+
+    Future<void> _submitData(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Handle the case when the user is not signed in
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User not signed in')),
+      );
+      return;
+    }
+
+    final String budgetStr = _amountController.text;
+    if (budgetStr.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid amount')),
+      );
+      return;
+    }
+
+    final double? budget = double.tryParse(budgetStr);
+    if (budget == null || budget <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid amount')),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .update({'Budget': budget});
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Budget updated successfully')),
+      );
+      Get.to(() => NavBar());
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update budget: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +172,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                             const SizedBox(height: 20),
                             CustomButton(
                               enabledText: "Save Budget", 
-                              onPressed: () {
-                                Get.to(() => NavBar());
-                              }, 
+                              onPressed: () => _submitData(context),
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ],

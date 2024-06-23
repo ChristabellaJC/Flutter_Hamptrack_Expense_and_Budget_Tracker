@@ -85,11 +85,11 @@ class _AccountPageState extends State<AccountPage> {
                       textStyle: TextStyle(
                         fontFamily: 'BalooThambi2',
                         fontSize: 40,
-                        color: whiteColor,
+                        color: textColor,
                         fontWeight: FontWeight.bold,
                       ),
-                      strokeColor: secTextColor,
-                      strokeWidth: 5,
+                      strokeColor: textColor,
+                      strokeWidth: 0,
                     ),
 
                     StrokeText(
@@ -98,11 +98,11 @@ class _AccountPageState extends State<AccountPage> {
                       textStyle: TextStyle(
                         fontFamily: 'BalooThambi2',
                         fontSize: 20,
-                        color: whiteColor,
+                        color: textColor,
                         fontWeight: FontWeight.bold,
                       ),
-                      strokeColor: secTextColor,
-                      strokeWidth: 5,
+                      strokeColor: textColor,
+                      strokeWidth: 0,
                     ),
                   ],
                 ),
