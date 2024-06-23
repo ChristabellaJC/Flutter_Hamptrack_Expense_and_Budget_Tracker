@@ -111,7 +111,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: accPadding,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -124,7 +124,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                     icon: Icon(
                                       Icons.highlight_off,
                                       color: iconColor,
-                                      size: 40,
+                                      size: titleAccFont,
                                     ),
                                   ),
                                   Container(
@@ -133,7 +133,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                       'Settings',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: titleAccFont,
                                         fontFamily: 'BalooThambi2',
                                         fontWeight: FontWeight.w800,
                                         color: textColor,

@@ -2,7 +2,7 @@ import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_hampter/components/bottomnavbar.dart';
 import 'package:dev_hampter/components/featureItem.dart';
-
+import 'package:dev_hampter/utils/sizes.dart';
 import 'package:get/get.dart';
 
 class AboutPage extends StatefulWidget {
@@ -27,6 +27,7 @@ class _AboutPageState extends State<AboutPage> {
         child: Container(
           height: height * 0.8,
           width: width,
+          padding: padding,
           decoration: BoxDecoration(
             color: secondaryColor,
             borderRadius: const BorderRadius.only(
@@ -35,7 +36,7 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: accPadding,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -48,7 +49,7 @@ class _AboutPageState extends State<AboutPage> {
                         icon: Icon(
                           Icons.highlight_off,
                           color: iconColor,
-                          size: 40,
+                          size: titleAccFont,
                         ),
                       ),
 
@@ -58,7 +59,7 @@ class _AboutPageState extends State<AboutPage> {
                           'About Us',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: titleAccFont,
                             fontFamily: 'BalooThambi2',
                             fontWeight: FontWeight.w800,
                             color: textColor,
@@ -71,7 +72,7 @@ class _AboutPageState extends State<AboutPage> {
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: accPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -168,6 +169,21 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                     ),
                   ),
+                  Container(
+                    width: width,
+                    height: height * .05,
+                    color: primaryColor,
+                    child: Center(
+                      child: Text(
+                        'Dev_Hampter',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: textColor,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             )
