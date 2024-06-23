@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_hampter/components/textFields.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:dev_hampter/utils/colors.dart';
@@ -414,6 +413,56 @@ class _CustomBlockState extends State<CustomBlock> {
           ),
         );
       },
+    );
+  }
+}
+
+class CustomBlockTwo extends StatefulWidget {
+  final IconData _icon;
+  final String _text;
+  const CustomBlockTwo(
+      {super.key, required IconData icon, required String text})
+      : _icon = icon,
+        _text = text;
+
+  @override
+  State<CustomBlockTwo> createState() => _CustomBlockTwoState();
+}
+
+class _CustomBlockTwoState extends State<CustomBlockTwo> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: primaryColor,
+      child: Row(
+        children: [
+          Container(
+            color: secondaryColor,
+            width: 80,
+            child: Icon(
+              widget._icon,
+              color: primaryColor,
+              size: 50,
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Column(
+            children: [
+              Text(
+                widget._text,
+                style: TextStyle(
+                  fontFamily: 'BalooThambi2',
+                  color: whiteColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
