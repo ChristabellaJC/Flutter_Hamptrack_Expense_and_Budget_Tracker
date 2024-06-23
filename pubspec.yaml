@@ -29,7 +29,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   get:
-  carousel_slider: ^4.2.1
   percent_indicator: ^4.0.1
   
   flutter:
@@ -38,8 +37,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: any
-  font_awesome_flutter: any
   firebase_auth: ^5.0.0
   intl: ^0.17.0
   getwidget: ^4.0.0
