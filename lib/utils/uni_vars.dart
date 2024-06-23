@@ -1,12 +1,10 @@
-// String username = 'Angela Chow';
 import 'package:flutter/material.dart';
-
-double incomeAmt = 100000;
-double expenseAmt = 100000;
-double budgetProg = 0.8;
-// bool type = false;
+int monthlyBudget = 800000; 
+int remainingBudget = monthlyBudget; 
+double budget = remainingBudget / 100; 
 String locale = 'id_ID';
 String symbol = "Rp. ";
+double budgetAmount = 1000;
 
 enum CategoryExpense {
   transportation(
@@ -35,10 +33,11 @@ enum CategoryExpense {
     5,
   );
 
-  const CategoryExpense(this.label, this.icon, this.id);
   final String label;
   final IconData icon;
   final int id;
+
+  const CategoryExpense(this.label, this.icon, this.id);
 }
 
 enum CategoryIncome {
@@ -53,8 +52,9 @@ enum CategoryIncome {
     2,
   );
 
-  const CategoryIncome(this.label, this.icon, this.id);
   final String label;
   final IconData icon;
   final int id;
+
+  const CategoryIncome(this.label, this.icon, this.id);
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -22,12 +23,15 @@ class _HomePageState extends State<HomePage> {
   String username = '';
   String userID = '';
   bool isLoading = true;
+  double budget = 0.0; // This will hold the user's set budget
+  double totalExpenses = 0.0; // Sum of all expenses
   FirestoreService firestoreService = FirestoreService();
 
   @override
   void initState() {
     super.initState();
     fetchUsername();
+    fetchData();
   }
 
   // void _handleDateSelected(DateTime selectedDate) {
@@ -102,6 +106,61 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final auth = Auth();
+      final user = auth.currentUser;
+      if (user != null) {
+        final userDoc = await auth.getUserByEmail(user.email!);
+        final userData = userDoc.data();
+        if (userData != null) {
+          String userID = userData['id'];
+
+          // Get current month's start and end dates
+          DateTime now = DateTime.now();
+          DateTime startOfMonth = DateTime(now.year, now.month, 1);
+          DateTime endOfMonth =
+              DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1));
+
+          // Fetch expenses for the current month
+          final expensesCollection = FirebaseFirestore.instance
+              .collection('Users')
+              .doc(userID)
+              .collection('Data');
+
+          final expensesQuery = await expensesCollection
+              .where('Date', isGreaterThanOrEqualTo: startOfMonth)
+              .where('Date', isLessThanOrEqualTo: endOfMonth)
+              .get();
+
+          // Calculate total expenses
+          int total = 0;
+          for (var doc in expensesQuery.docs) {
+            total += (doc['Amount'] as num).toInt();
+          }
+
+          setState(() {
+            totalExpenses = total.toDouble(); // Convert to double if necessary
+            isLoading = false;
+          });
+        }
+      }
+    } catch (e) {
+      print('Error fetching expenses: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Function to calculate percentage spent
+  double calculateBudgetPercentage() {
+    if (budget == 0.0) {
+      return 0.0;
+    }
+    return (totalExpenses / budget) * 100;
   }
 
   @override
@@ -195,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                               10), // Adjust border radius as needed
                         ),
                         child: GFProgressBar(
-                          percentage: budgetProg,
+                          percentage: calculateBudgetPercentage(),
                           lineHeight: 20,
                           backgroundColor: secondaryColor,
                           progressBarColor: primaryColor,

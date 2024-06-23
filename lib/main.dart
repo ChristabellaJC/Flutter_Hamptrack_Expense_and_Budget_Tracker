@@ -3,26 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-    apiKey: "AIzaSyDt6HtG2GTAP2tKCNfbXOyO7Ahwt6RDTls",
-    appId: "1:413732506963:android:ff0ab03b35af123864e5a6",
-    messagingSenderId: "413732506963",
-    projectId: "hamptrack",
-  ));
+    options: const FirebaseOptions(
+      apiKey: "your_api_key",
+      appId: "your_app_id",
+      messagingSenderId: "your_messaging_sender_id",
+      projectId: "your_project_id",
+    ),
+  );
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -30,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'BalooThambi2',
-        // useMaterial3: true,
+        // Define your app's theme here
       ),
       initialRoute: RoutesClass.splashScreen,
       getPages: RoutesClass.routes,
