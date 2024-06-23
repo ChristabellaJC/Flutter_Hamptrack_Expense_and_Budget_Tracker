@@ -148,7 +148,7 @@ class _AccountPageState extends State<AccountPage> {
                         SizedBox(height: 20),
 
                         CustomButton(
-                          enabledText: 'About', 
+                          enabledText: 'About Us', 
                           onPressed: (){
                             Get.to(() => AboutPage());
                           }, 
