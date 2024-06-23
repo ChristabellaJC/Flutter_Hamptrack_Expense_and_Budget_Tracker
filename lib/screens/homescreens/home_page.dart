@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
-import 'package:dev_hampter/components/block.dart';
-import 'package:dev_hampter/components/dates.dart';
 import 'package:dev_hampter/components/mou_state.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
@@ -33,11 +30,11 @@ class _HomePageState extends State<HomePage> {
     fetchUsername();
   }
 
-  void _handleDateSelected(DateTime selectedDate) {
-    setState(() {
-      this.selectedDate = selectedDate;
-    });
-  }
+  // void _handleDateSelected(DateTime selectedDate) {
+  //   setState(() {
+  //     this.selectedDate = selectedDate;
+  //   });
+  // }
 
   Future<void> fetchUsername() async {
     try {
@@ -55,10 +52,20 @@ class _HomePageState extends State<HomePage> {
         }
       }
     } catch (e) {
-      print('Error fetching user data: $e');
-      setState(() {
-        isLoading = false;
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redCol,
+          content: Text(
+            'Failed to fetch data: $e',
+            style: TextStyle(
+              fontFamily: 'BalooThambi2',
+              color: whiteColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -235,82 +242,82 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: height * .05,
                       ),
-                      Text(
-                        'History',
-                        style: TextStyle(
-                          color: textColor,
-                          fontFamily: 'BalooThambi2',
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: height * .01,
-                      ),
-                      HorizontalCalendar(
-                        onDateSelected: _handleDateSelected,
-                      ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: firestoreService.getDataStream(
-                            userID, selectedDate),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text('Error: ${snapshot.error}'),
-                            );
-                          }
+                      // Text(
+                      //   'History',
+                      //   style: TextStyle(
+                      //     color: textColor,
+                      //     fontFamily: 'BalooThambi2',
+                      //     fontSize: 35,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: height * .01,
+                      // ),
+                      // HorizontalCalendar(
+                      //   onDateSelected: _handleDateSelected,
+                      // ),
+                      // StreamBuilder<QuerySnapshot>(
+                      //   stream: firestoreService.getDataStream(
+                      //       userID, selectedDate),
+                      //   builder: (BuildContext context,
+                      //       AsyncSnapshot<QuerySnapshot> snapshot) {
+                      //     if (snapshot.hasError) {
+                      //       return Center(
+                      //         child: Text('Error: ${snapshot.error}'),
+                      //       );
+                      //     }
 
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                      //     if (snapshot.connectionState ==
+                      //         ConnectionState.waiting) {
+                      //       return Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     }
 
-                          List<DocumentSnapshot> data = snapshot.data!.docs;
+                      //     List<DocumentSnapshot> data = snapshot.data!.docs;
 
-                          if (data.isEmpty) {
-                            return Center(
-                              child: Text(
-                                'No Data Yet!',
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            );
-                          }
+                      //     if (data.isEmpty) {
+                      //       return Center(
+                      //         child: Text(
+                      //           'No Data Yet!',
+                      //           style: TextStyle(
+                      //             color: textColor,
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       );
+                      //     }
 
-                          return ListView.separated(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: data.length,
-                            separatorBuilder: (context, index) => Divider(),
-                            itemBuilder: (context, index) {
-                              var doc = data[index];
-                              var docId = doc.id;
-                              var amount = doc['Amount'];
-                              var type = doc['Type'];
-                              var date = (doc['Date'] as Timestamp).toDate();
-                              var note = doc['Note'];
-                              var category = doc['Category'];
+                      //     return ListView.separated(
+                      //       shrinkWrap: true,
+                      //       physics: NeverScrollableScrollPhysics(),
+                      //       itemCount: data.length,
+                      //       separatorBuilder: (context, index) => Divider(),
+                      //       itemBuilder: (context, index) {
+                      //         var doc = data[index];
+                      //         var docId = doc.id;
+                      //         var amount = doc['Amount'];
+                      //         var type = doc['Type'];
+                      //         var date = (doc['Date'] as Timestamp).toDate();
+                      //         var note = doc['Note'];
+                      //         var category = doc['Category'];
 
-                              return CustomBlock(
-                                amount: amount,
-                                category: category,
-                                type: type,
-                                date: date,
-                                note: note,
-                                docId: docId,
-                                onDelete: _deleteData,
-                                userId: userID, // Pass the userID here
-                              );
-                            },
-                          );
-                        },
-                      )
+                      //         return CustomBlock(
+                      //           amount: amount,
+                      //           category: category,
+                      //           type: type,
+                      //           date: date,
+                      //           note: note,
+                      //           docId: docId,
+                      //           onDelete: _deleteData,
+                      //           userId: userID, // Pass the userID here
+                      //         );
+                      //       },
+                      //     );
+                      //   },
+                      // )
                     ],
                   ),
                 ),
