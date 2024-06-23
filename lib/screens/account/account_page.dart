@@ -79,31 +79,22 @@ class _AccountPageState extends State<AccountPage> {
                     SizedBox(
                       height: height * .02,
                     ),
-                    StrokeText(
-                      text: username,
-                      textAlign: TextAlign.center,
-                      textStyle: TextStyle(
-                        fontFamily: 'BalooThambi2',
-                        fontSize: 40,
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      strokeColor: textColor,
-                      strokeWidth: 0,
-                    ),
-
-                    StrokeText(
-                      text: email,
-                      textAlign: TextAlign.center,
-                      textStyle: TextStyle(
-                        fontFamily: 'BalooThambi2',
-                        fontSize: 20,
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      strokeColor: textColor,
-                      strokeWidth: 0,
-                    ),
+                    Text(
+                      username,
+                        style: TextStyle(
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 40,
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    Text(
+                      email,
+                        style: TextStyle(
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        )),
                   ],
                 ),
               ),
