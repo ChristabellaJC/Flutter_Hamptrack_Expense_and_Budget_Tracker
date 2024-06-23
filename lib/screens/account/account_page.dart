@@ -2,11 +2,11 @@ import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/screens/account/account_settings_page.dart';
 import 'package:dev_hampter/screens/signupandsignin/sign_in_page.dart';
+import 'package:dev_hampter/screens/account/about_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
-import 'package:dev_hampter/components/settingfields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stroke_text/stroke_text.dart';
 
@@ -149,7 +149,9 @@ class _AccountPageState extends State<AccountPage> {
 
                         CustomButton(
                           enabledText: 'About', 
-                          onPressed: (){}, 
+                          onPressed: (){
+                            Get.to(() => AboutPage());
+                          }, 
                           borderRadius: BorderRadius.circular(10), 
                           gradient: LinearGradient(colors: [primaryColor, primaryColor]),
                           width: width * .8,

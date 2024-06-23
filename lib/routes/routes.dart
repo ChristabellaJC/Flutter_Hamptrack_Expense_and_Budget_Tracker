@@ -1,4 +1,5 @@
 import "package:dev_hampter/components/bottomnavbar.dart";
+import "package:dev_hampter/screens/account/about_page.dart";
 import "package:dev_hampter/screens/account/account_page.dart";
 import "package:dev_hampter/screens/account/account_settings_page.dart";
 import "package:dev_hampter/screens/add/add_details_page.dart";
@@ -9,6 +10,7 @@ import "package:dev_hampter/screens/signupandsignin/sign_in_page.dart";
 import "package:dev_hampter/screens/splashscreens/splash_screen.dart";
 import "package:dev_hampter/screens/signupandsignin/terms_of_service.dart";
 import "package:dev_hampter/screens/splashscreens/welcome_page.dart";
+import "package:dev_hampter/screens/account/about_page.dart";
 import "package:get/get.dart";
 
 class RoutesClass {
@@ -24,7 +26,7 @@ class RoutesClass {
   static String accountPage = "/accountPage";
   static String accountSettingsPage = "/accountSettingsPage";
   static String navBar = "/navBar";
-  static String editUserPage = "/editUserPage";
+  static String aboutPage = "/aboutPage";
 
   static String getSplashRoute() => splashScreen;
   static String getWelcomePage() => welcomePage;
@@ -37,7 +39,7 @@ class RoutesClass {
   static String getAccountPage() => accountPage;
   static String getAccountSettingsPage() => accountSettingsPage;
   static String getNavBar() => navBar;
-  static String getEditUserPage() => editUserPage;
+  static String getAboutPage() => aboutPage;
 
   static List<GetPage> routes = [
     GetPage(
@@ -89,6 +91,10 @@ class RoutesClass {
     GetPage(
       name: navBar,
       page: () => const NavBar(),
+    ),
+    GetPage(
+      name: aboutPage,
+      page: () => const AboutPage(),
     ),
   ];
 }
