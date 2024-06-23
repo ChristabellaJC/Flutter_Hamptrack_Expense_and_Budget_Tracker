@@ -36,18 +36,8 @@ enum CategoryExpense {
     5,
     Color(0xFFFFD166),
   ),
-  salary(
-    'Salary',
-    Icons.payments_outlined,
-    6,
-    Color(0xFF8338EC)
-    ),
-  bonus(
-    'Bonus',
-    Icons.local_mall_outlined,
-    7,
-    Color(0xFFFB5607)
-    );
+  salary('Salary', Icons.payments_outlined, 6, Color(0xFF8338EC)),
+  bonus('Bonus', Icons.local_mall_outlined, 7, Color(0xFFFB5607));
 
   const CategoryExpense(this.label, this.icon, this.id, this.color);
   final String label;
@@ -91,11 +81,27 @@ class PieChart2State extends State<PieChartSample2> {
               }
 
               if (snapshot.hasError) {
-                return const Center(child: Text('Error fetching data'));
+                return Center(
+                    child: Text(
+                  'Error fetching data',
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ));
               }
 
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const Center(child: Text('No data available'));
+                return Center(
+                    child: Text(
+                  'No data available',
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ));
               }
 
               List<PieChartSectionData> sections =
@@ -131,7 +137,7 @@ class PieChart2State extends State<PieChartSample2> {
             },
           ),
           const SizedBox(
-            height: 80,
+            height: 100,
           ),
           Container(
             child: Column(
@@ -142,16 +148,17 @@ class PieChart2State extends State<PieChartSample2> {
                   child: Indicator(
                     color: category.color,
                     text: category.label,
-                    isSquare: true, // Adjust if needed
-                    size: 16, // Adjust size if needed
+                    textColor: textColor,
+                    isSquare: true,
+                    size: 16,
                   ),
                 );
               }).toList(),
             ),
           ),
-          SizedBox(
-            height: 0,
-          )
+          // const SizedBox(
+          //   height: 0,
+          // )
         ],
       ),
     );
@@ -160,18 +167,14 @@ class PieChart2State extends State<PieChartSample2> {
   List<PieChartSectionData> _generateSections(
       List<QueryDocumentSnapshot> docs) {
     List<CategoryExpense> categories = CategoryExpense.values;
-    Map<CategoryExpense, double> categoryTotals =
-        Map<CategoryExpense, double>.fromIterable(
-      categories,
-      key: (category) => category,
-      value: (_) => 0,
-    );
+    Map<CategoryExpense, double> categoryTotals = {
+      for (var category in categories) category: 0
+    };
     double totalSum = 0;
 
     for (var doc in docs) {
       int categoryIndex = doc['Category'];
-      CategoryExpense category =
-          categories[categoryIndex - 1]; // Adjust for enum index starting at 0
+      CategoryExpense category = categories[categoryIndex - 1];
       int amount = doc['Amount'];
 
       categoryTotals[category] = categoryTotals[category]! + amount;
@@ -190,8 +193,8 @@ class PieChart2State extends State<PieChartSample2> {
           titleStyle: TextStyle(
             fontSize: touchedIndex == category.id ? 25.0 : 16.0,
             fontWeight: FontWeight.bold,
-            color: whiteColor,
-            shadows: [Shadow(color: shadowColor, blurRadius: 2)],
+            fontFamily: 'BalooThambi2',
+            color: textColor,
           ),
         ),
       );
