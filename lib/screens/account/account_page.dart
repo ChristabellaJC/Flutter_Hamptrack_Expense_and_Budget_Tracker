@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:stroke_text/stroke_text.dart';
 
 
 class AccountPage extends StatefulWidget {
