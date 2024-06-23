@@ -71,6 +71,6 @@ class NavController extends GetxController {
     const HomePage(),
     const AddPage(),
     const DetailsPage(),
-    const AccountSettingsPage(),
+    const AccountPage(),
   ];
 }
