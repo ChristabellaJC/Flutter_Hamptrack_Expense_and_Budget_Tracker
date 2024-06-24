@@ -1,5 +1,5 @@
 import 'package:dev_hampter/components/buttons.dart';
-import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/components/text_fields.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:dev_hampter/utils/colors.dart';
@@ -33,6 +33,7 @@ class _AddPageState extends State<AddPage> {
     fetchUserID();
   }
 
+  //Fetch userID
   Future<void> fetchUserID() async {
     try {
       final auth = Auth();
@@ -48,31 +49,73 @@ class _AddPageState extends State<AddPage> {
         }
       }
     } catch (e) {
-      print('Error fetching user data: $e');
       setState(() {
         isLoading = false;
       });
     }
   }
 
+  //Select Date functiom
+  Future<void> _selectDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor,
+              onPrimary: whiteColor,
+              onSurface: textColor,
+              onSecondary: textColor,
+              surface: secondaryColor,
+              secondary: textColor,
+            ),
+            dialogBackgroundColor: whiteColor,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: primaryColor,
+                  fontFamily: 'BalooThambi2',
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
+                ),
+                foregroundColor: primaryColor,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _dateController.text = picked.toString().split(" ")[0];
+      });
+    }
+  }
+
+  //Toggle button income
   void _toggleButtonA() {
     setState(() {
       type = false;
     });
   }
 
+  //Toggle button expense
   void _toggleButtonB() {
     setState(() {
       type = true;
     });
   }
 
+  //Function to submit data
   void _submitData(BuildContext context) {
-    // Convert amount to integer
     int? amount = int.tryParse(_amountController.text);
     if (amount == null) {
-      // Handle invalid amount
-      print('Invalid amount');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: redCol,
@@ -90,12 +133,9 @@ class _AddPageState extends State<AddPage> {
       return;
     }
 
-    // Get selected category ID
     int? categoryId =
         dropdownFieldCustomKey.currentState?.getSelectedCategoryId();
     if (categoryId == null) {
-      // Handle no category selected
-      print('No category selected');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: redCol,
@@ -113,11 +153,9 @@ class _AddPageState extends State<AddPage> {
       return;
     }
 
-    // Convert date string to DateTime
+    //Convert date String to DateTime
     DateTime? date = DateTime.tryParse(_dateController.text);
     if (date == null) {
-      // Handle invalid date
-      print('Invalid date');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: redCol,
@@ -135,10 +173,10 @@ class _AddPageState extends State<AddPage> {
       return;
     }
 
-    // Add data to Firestore
+    //Adding data to firestore
     firestoreService
         .addData(
-      userID, // Pass the user ID
+      userID,
       _noteController.text,
       date,
       type,
@@ -146,8 +184,6 @@ class _AddPageState extends State<AddPage> {
       categoryId,
     )
         .then((_) {
-      // Handle successful data submission
-      print('Data submitted successfully');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: greenCol,
@@ -163,8 +199,6 @@ class _AddPageState extends State<AddPage> {
         ),
       );
     }).catchError((error) {
-      // Handle errors
-      print('Error submitting data: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: redCol,
@@ -226,6 +260,7 @@ class _AddPageState extends State<AddPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      //Button toggles for Income and Expense
                       ButtonToggleExample(
                         type: type,
                         toggleButtonA: _toggleButtonA,
@@ -235,11 +270,12 @@ class _AddPageState extends State<AddPage> {
                         height: height * .05,
                       ),
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: textColor,
                         ),
+                        //TextField for amount
                         child: Row(
                           children: [
                             Text(
@@ -282,6 +318,7 @@ class _AddPageState extends State<AddPage> {
                       SizedBox(
                         height: height * .02,
                       ),
+                      //Textfield to pick date
                       CustomTextFieldEmpty(
                         icon: Icons.calendar_today_outlined,
                         text: 'Date',
@@ -294,6 +331,7 @@ class _AddPageState extends State<AddPage> {
                       SizedBox(
                         height: height * .02,
                       ),
+                      //Textfield to pick Category
                       DropDownFieldCustom(
                         key: dropdownFieldCustomKey,
                         type: type,
@@ -305,6 +343,7 @@ class _AddPageState extends State<AddPage> {
                       SizedBox(
                         height: height * .02,
                       ),
+                      //Textfield to write the note
                       CustomTextFieldEmpty(
                         icon: Icons.note_alt_outlined,
                         text: 'Note',
@@ -314,8 +353,9 @@ class _AddPageState extends State<AddPage> {
                       SizedBox(
                         height: height * .05,
                       ),
+                      //Save button
                       CustomButton(
-                        enabledText: 'Submit',
+                        enabledText: 'Save',
                         onPressed: () => _submitData(context),
                         borderRadius: BorderRadius.circular(20),
                       )
@@ -328,47 +368,5 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate() async {
-    DateTime? _picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: primaryColor,
-              onPrimary: whiteColor,
-              onSurface: textColor,
-              onSecondary: textColor,
-              surface: secondaryColor,
-              secondary: textColor,
-            ),
-            dialogBackgroundColor: whiteColor,
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(
-                  color: primaryColor,
-                  fontFamily: 'BalooThambi2',
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal,
-                ),
-                foregroundColor: primaryColor,
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (_picked != null) {
-      setState(() {
-        _dateController.text = _picked.toString().split(" ")[0];
-      });
-    }
   }
 }

@@ -1,4 +1,4 @@
-
+//Mou state functions
 String mouCondition(budget) {
   if (budget >= 0.7 && budget <= 1) {
     return 'Feeling Happy!';

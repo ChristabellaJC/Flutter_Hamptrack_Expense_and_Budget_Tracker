@@ -35,6 +35,7 @@ class NavBar extends StatelessWidget {
               elevation: 0,
               currentIndex: controller.selectedIndex.value,
               onTap: (index) => controller.selectedIndex.value = index,
+              //Set the pages to navigate
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
@@ -64,6 +65,7 @@ class NavBar extends StatelessWidget {
   }
 }
 
+//Create GetX controller to switch pages
 class NavController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 

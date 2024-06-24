@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
 
+// Splash screen page
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
 
@@ -21,11 +22,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     Timer(const Duration(seconds: 5), () {
       setState(() {
         _visible = !_visible;
+        Get.toNamed(RoutesClass.getWelcomePage());
       });
-    });
-
-    Timer(const Duration(seconds: 5), () {
-      Get.toNamed(RoutesClass.getWelcomePage());
     });
   }
 

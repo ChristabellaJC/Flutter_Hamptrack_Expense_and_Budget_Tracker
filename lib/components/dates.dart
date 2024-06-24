@@ -1,12 +1,14 @@
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+//Horizontal Calendar
 class HorizontalCalendar extends StatefulWidget {
   final Function(DateTime) onDateSelected;
 
-  HorizontalCalendar({required this.onDateSelected});
+  const HorizontalCalendar({super.key, required this.onDateSelected});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HorizontalCalendarState createState() => _HorizontalCalendarState();
 }
 
@@ -35,7 +37,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
       children: <Widget>[
         Container(
           height: 40,
-          margin: EdgeInsets.symmetric(vertical: .2),
+          margin: const EdgeInsets.symmetric(vertical: .2),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: months.length,
@@ -50,7 +52,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
                 child: Container(
                   width: 100,
                   height: 50,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: selectedDate.month == index + 1
                         ? toolbarIconColor
@@ -74,7 +76,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(

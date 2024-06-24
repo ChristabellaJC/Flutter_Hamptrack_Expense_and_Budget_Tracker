@@ -1,6 +1,7 @@
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+//Buttons with gradient
 class CustomButton extends StatefulWidget {
   final BorderRadiusGeometry _borderRadius;
   final double? _width;
@@ -65,7 +66,7 @@ class _CustomButtonState extends State<CustomButton> {
                 style: TextStyle(
                   fontFamily: 'BalooThambi2',
                   fontSize: 25,
-                  color: whiteColor,
+                  color: textColor,
                 ),
               ),
             ),
@@ -123,17 +124,18 @@ class _CustomTextButtonState extends State<CustomTextButton> {
   }
 }
 
+//Toggle buttons for income/expense
 class ButtonToggleExample extends StatefulWidget {
   final bool type;
   final VoidCallback toggleButtonA;
   final VoidCallback toggleButtonB;
 
   const ButtonToggleExample({
-    Key? key,
+    super.key,
     required this.type,
     required this.toggleButtonA,
     required this.toggleButtonB,
-  }) : super(key: key);
+  });
 
   @override
   _ButtonToggleExampleState createState() => _ButtonToggleExampleState();
@@ -153,7 +155,7 @@ class _ButtonToggleExampleState extends State<ButtonToggleExample> {
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonAColor,
             elevation: 0,
-            fixedSize: Size(150, 50),
+            fixedSize: const Size(150, 50),
             side: BorderSide(color: primaryColor),
           ),
           child: Text(
@@ -171,7 +173,7 @@ class _ButtonToggleExampleState extends State<ButtonToggleExample> {
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonBColor,
             elevation: 0,
-            fixedSize: Size(150, 50),
+            fixedSize: const Size(150, 50),
             side: BorderSide(color: primaryColor),
           ),
           child: Text(

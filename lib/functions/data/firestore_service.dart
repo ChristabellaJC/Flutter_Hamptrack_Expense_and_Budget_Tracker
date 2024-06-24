@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//Firestore service to store firestore functions
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  //Get data stream to return database data based off dates
   Stream<QuerySnapshot> getDataStream(String userId, DateTime selectedDate) {
     if (userId.isEmpty) {
-      return Stream.empty();
+      return const Stream.empty();
     }
 
     DateTime startOfMonth = DateTime(selectedDate.year, selectedDate.month, 1);
     DateTime endOfMonth = DateTime(selectedDate.year, selectedDate.month + 1, 1)
-        .subtract(Duration(days: 1));
+        .subtract(const Duration(days: 1));
 
     return _db
         .collection('Users')
@@ -22,6 +24,7 @@ class FirestoreService {
         .snapshots();
   }
 
+  //Add data function
   Future<void> addData(String userId, String note, DateTime date, bool type,
       int amount, int category) async {
     final CollectionReference data =
@@ -40,6 +43,7 @@ class FirestoreService {
     }
   }
 
+  //Delete data function
   Future<void> deleteData(String userId, String docId) async {
     try {
       final docRef =
@@ -51,6 +55,7 @@ class FirestoreService {
     }
   }
 
+  //Update data function
   Future<void> updateData(String docId, String userID, String note,
       DateTime date, bool type, int amount, int category) async {
     return _db
@@ -69,6 +74,7 @@ class FirestoreService {
     });
   }
 
+  //Get monthly summary of income and expense
   Future<Map<String, int>> getMonthlySummary(
       String userId, DateTime selectedDate) async {
     int totalIncome = 0;
@@ -101,6 +107,7 @@ class FirestoreService {
     return {'income': totalIncome, 'expense': totalExpense};
   }
 
+  //Get monthly budget
   Future<int> fetchMonthlyBudget(String userId) async {
     try {
       DocumentSnapshot userDoc =

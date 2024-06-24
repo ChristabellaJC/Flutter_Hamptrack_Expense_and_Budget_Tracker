@@ -19,18 +19,24 @@ class FeatureItem extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
+            color: textColor,
+            fontFamily: 'BalooThambi2',
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: textColor,
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           description,
-          style: TextStyle(fontSize: 14, color: Colors.black54),
+          style: TextStyle(
+            color: textColor,
+            fontFamily: 'BalooThambi2',
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
           textAlign: TextAlign.justify,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

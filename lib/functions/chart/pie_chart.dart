@@ -5,12 +5,13 @@ import 'package:dev_hampter/functions/chart/indicator.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 
-enum CategoryExpense {
+//Categories
+enum Categories {
   transportation(
     'Transportation',
     Icons.directions_bus_filled_outlined,
     1,
-    Color(0xFF06D6A0),
+    Color.fromARGB(255, 231, 41, 196),
   ),
   foodanddrinks(
     'Food and Drinks',
@@ -34,12 +35,22 @@ enum CategoryExpense {
     'Hobbies',
     Icons.sports_esports_outlined,
     5,
-    Color(0xFFFFD166),
+    Color.fromARGB(255, 255, 133, 62),
   ),
-  salary('Salary', Icons.payments_outlined, 6, Color(0xFF8338EC)),
-  bonus('Bonus', Icons.local_mall_outlined, 7, Color(0xFFFB5607));
+  salary(
+    'Salary',
+    Icons.payments_outlined,
+    6,
+    Color(0xFF06D6A0),
+  ),
+  bonus(
+    'Bonus',
+    Icons.local_mall_outlined,
+    7,
+    Color(0xFFFFD166),
+  );
 
-  const CategoryExpense(this.label, this.icon, this.id, this.color);
+  const Categories(this.label, this.icon, this.id, this.color);
   final String label;
   final IconData icon;
   final int id;
@@ -51,10 +62,10 @@ class PieChartSample2 extends StatefulWidget {
   final DateTime selectedDate;
 
   const PieChartSample2({
-    Key? key,
+    super.key,
     required this.userId,
     required this.selectedDate,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => PieChart2State();
@@ -68,7 +79,7 @@ class PieChart2State extends State<PieChartSample2> {
     final FirestoreService firestoreService = FirestoreService();
 
     return AspectRatio(
-      aspectRatio: 0.9,
+      aspectRatio: 0.87,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -79,7 +90,6 @@ class PieChart2State extends State<PieChartSample2> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
-
               if (snapshot.hasError) {
                 return Center(
                     child: Text(
@@ -91,7 +101,6 @@ class PieChart2State extends State<PieChartSample2> {
                   ),
                 ));
               }
-
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 return Center(
                     child: Text(
@@ -103,10 +112,8 @@ class PieChart2State extends State<PieChartSample2> {
                   ),
                 ));
               }
-
               List<PieChartSectionData> sections =
                   _generateSections(snapshot.data!.docs);
-
               return AspectRatio(
                 aspectRatio: 50,
                 child: PieChart(
@@ -139,26 +146,21 @@ class PieChart2State extends State<PieChartSample2> {
           const SizedBox(
             height: 100,
           ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: CategoryExpense.values.map((category) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Indicator(
-                    color: category.color,
-                    text: category.label,
-                    textColor: textColor,
-                    isSquare: true,
-                    size: 16,
-                  ),
-                );
-              }).toList(),
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: Categories.values.map((category) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Indicator(
+                  color: category.color,
+                  text: category.label,
+                  textColor: textColor,
+                  isSquare: true,
+                  size: 15,
+                ),
+              );
+            }).toList(),
           ),
-          // const SizedBox(
-          //   height: 0,
-          // )
         ],
       ),
     );
@@ -166,15 +168,15 @@ class PieChart2State extends State<PieChartSample2> {
 
   List<PieChartSectionData> _generateSections(
       List<QueryDocumentSnapshot> docs) {
-    List<CategoryExpense> categories = CategoryExpense.values;
-    Map<CategoryExpense, double> categoryTotals = {
+    List<Categories> categories = Categories.values;
+    Map<Categories, double> categoryTotals = {
       for (var category in categories) category: 0
     };
     double totalSum = 0;
 
     for (var doc in docs) {
       int categoryIndex = doc['Category'];
-      CategoryExpense category = categories[categoryIndex - 1];
+      Categories category = categories[categoryIndex - 1];
       int amount = doc['Amount'];
 
       categoryTotals[category] = categoryTotals[category]! + amount;
@@ -186,7 +188,7 @@ class PieChart2State extends State<PieChartSample2> {
       double percentage = (total / totalSum) * 100;
       sections.add(
         PieChartSectionData(
-          color: category.color, // Use the color defined in your enum
+          color: category.color,
           value: percentage,
           title: '${percentage.toStringAsFixed(1)}%',
           radius: touchedIndex == category.id ? 60.0 : 50.0,
@@ -194,12 +196,11 @@ class PieChart2State extends State<PieChartSample2> {
             fontSize: touchedIndex == category.id ? 25.0 : 16.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'BalooThambi2',
-            color: textColor,
+            color: whiteColor,
           ),
         ),
       );
     });
-
     return sections;
   }
 }

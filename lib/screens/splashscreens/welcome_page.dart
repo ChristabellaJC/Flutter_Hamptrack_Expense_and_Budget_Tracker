@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stroke_text/stroke_text.dart';
 
+//Welcome page
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
 
@@ -18,91 +19,92 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.height;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Column(
+    width = MediaQuery.of(context).size.width; 
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                height: height,
+                width: width,
+                color: secondaryColor,
+              )
+            ],
+          ),
+          ClipPath(
+            clipper: BezierClipper1(),
+            child: Container(
+              height: height * .7,
+              decoration: BoxDecoration(
+                color: primaryColor,
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/background.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: height,
-                  width: width,
-                  color: secondaryColor,
-                )
+                Image.asset(
+                  'assets/images/welcomeMou.png',
+                  width: 200,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                StrokeText(
+                  text: 'Manage your',
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    fontFamily: 'BalooThambi2',
+                    fontSize: 47,
+                    color: secTextColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  strokeColor: whiteColor,
+                  strokeWidth: 5,
+                ),
+                StrokeText(
+                  text: 'Finances',
+                  textAlign: TextAlign.center,
+                  textStyle: TextStyle(
+                    fontFamily: 'BalooThambi2',
+                    fontSize: 47,
+                    color: secTextColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  strokeColor: whiteColor,
+                  strokeWidth: 5,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomButton(
+                  enabledText: 'Get Started',
+                  borderRadius: BorderRadius.circular(20),
+                  onPressed: () {
+                    Get.toNamed(RoutesClass.signUpPage);
+                  },
+                ),
+                SizedBox(
+                  height: height * .05,
+                ),
               ],
             ),
-            ClipPath(
-              clipper: BezierClipper1(),
-              child: Container(
-                height: height * .7,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/background.png'),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    'assets/images/welcomeMou.png',
-                    width: 200,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  StrokeText(
-                    text: 'Manage your',
-                    textAlign: TextAlign.center,
-                    textStyle: TextStyle(
-                      fontFamily: 'BalooThambi2',
-                      fontSize: 47,
-                      color: secTextColor,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    strokeColor: whiteColor,
-                    strokeWidth: 5,
-                  ),
-                  StrokeText(
-                    text: 'Finances',
-                    textAlign: TextAlign.center,
-                    textStyle: TextStyle(
-                      fontFamily: 'BalooThambi2',
-                      fontSize: 47,
-                      color: secTextColor,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    strokeColor: whiteColor,
-                    strokeWidth: 5,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  CustomButton(
-                    enabledText: 'Get Started',
-                    borderRadius: BorderRadius.circular(20),
-                    onPressed: () {
-                      Get.toNamed(RoutesClass.signUpPage);
-                    },
-                  ),
-                  SizedBox(
-                    height: height * .05,
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
+//Bezier clipper to make the background
 class BezierClipper1 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -122,7 +124,6 @@ class BezierClipper1 extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-    throw UnimplementedError();
+    return false;
   }
 }

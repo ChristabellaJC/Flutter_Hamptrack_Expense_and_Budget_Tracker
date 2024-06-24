@@ -1,3 +1,4 @@
+//User model
 class UserModel {
   final String? id;
   final String username;

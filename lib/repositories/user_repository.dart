@@ -3,6 +3,7 @@ import 'package:dev_hampter/functions/authentication/user_model.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:get/get.dart';
 
+//User repository
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
 

@@ -1,10 +1,12 @@
-import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/components/text_fields.dart';
+import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+//Blocks for income/expense
 class CustomBlock extends StatefulWidget {
   final int _category;
   final DateTime _date;
@@ -37,10 +39,15 @@ class CustomBlock extends StatefulWidget {
 }
 
 class _CustomBlockState extends State<CustomBlock> {
+  //Checks _type to see what type of data it is
+  //If true = Expense
+  //if false = income
   Color _color() {
     return widget._type ? redCol : greenCol;
   }
 
+  //Adjusts depending to what data it is
+  //Takes enum values to show icons based of the category
   IconData _icon() {
     if (widget._type) {
       return CategoryExpense.values
@@ -55,12 +62,13 @@ class _CustomBlockState extends State<CustomBlock> {
     }
   }
 
+  //Format date
   String _formattedDate() {
-    return DateFormat('dd/MM/yyyy').format(widget._date);
+    return DateFormat('yyyy/MM/dd').format(widget._date);
   }
 
   void _showDetailsDialog() {
-    String _formattedamount = NumberFormat.currency(
+    String formattedamount = NumberFormat.currency(
       locale: locale,
       symbol: symbol,
       decimalDigits: 0,
@@ -71,14 +79,17 @@ class _CustomBlockState extends State<CustomBlock> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: secondaryColor,
-          contentPadding: EdgeInsets.only(top: 10.0),
+          contentPadding: EdgeInsets.zero,
           content: Container(
-            constraints: BoxConstraints(maxHeight: 300),
+            constraints: const BoxConstraints(maxHeight: 300),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       icon: Icon(Icons.close, color: iconColor),
@@ -86,7 +97,6 @@ class _CustomBlockState extends State<CustomBlock> {
                         Navigator.of(context).pop();
                       },
                     ),
-                    SizedBox(width: 20),
                     Text(
                       'Details',
                       style: TextStyle(
@@ -96,7 +106,6 @@ class _CustomBlockState extends State<CustomBlock> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 20),
                     IconButton(
                       icon: Icon(Icons.edit, color: iconColor),
                       onPressed: () {
@@ -114,76 +123,69 @@ class _CustomBlockState extends State<CustomBlock> {
                     ),
                   ],
                 ),
-                // Divider(color: whiteColor),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Amount',
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _formattedamount,
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _formattedDate(),
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Note',
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            widget._note,
-                            style: TextStyle(
-                              color: textColor,
-                              fontFamily: 'BalooThambi2',
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Amount',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                      Text(
+                        formattedamount,
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Date',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        _formattedDate(),
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Note',
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        widget._note,
+                        style: TextStyle(
+                          color: textColor,
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -195,7 +197,7 @@ class _CustomBlockState extends State<CustomBlock> {
 
   @override
   Widget build(BuildContext context) {
-    String _formattedamount = NumberFormat.currency(
+    String formattedamount = NumberFormat.currency(
       locale: locale,
       symbol: symbol,
       decimalDigits: 0,
@@ -204,7 +206,7 @@ class _CustomBlockState extends State<CustomBlock> {
     return GestureDetector(
       onTap: _showDetailsDialog,
       child: Container(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         height: 70,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(20),
@@ -225,7 +227,7 @@ class _CustomBlockState extends State<CustomBlock> {
                 size: 20,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Expanded(
@@ -237,7 +239,7 @@ class _CustomBlockState extends State<CustomBlock> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _formattedamount.toString(),
+                        formattedamount.toString(),
                         style: TextStyle(
                           fontFamily: 'BalooThambi2',
                           color: whiteColor,
@@ -257,12 +259,11 @@ class _CustomBlockState extends State<CustomBlock> {
                     ],
                   ),
                   IconButton(
-                    onPressed: () => widget
-                        .onDelete(widget.docId), // Call onDelete with docId
+                    onPressed: () => widget.onDelete(widget.docId),
                     icon: Icon(
                       Icons.delete,
-                      size: 30, // Adjust size as needed
-                      color: whiteColor, // Adjust color as needed
+                      size: 30,
+                      color: whiteColor,
                     ),
                   ),
                 ],
@@ -283,19 +284,38 @@ class _CustomBlockState extends State<CustomBlock> {
       bool initialType,
       String initialNote,
       int initialCategory) async {
-    final _dateController = TextEditingController(
+    final dateController = TextEditingController(
         text: DateFormat('yyyy/MM/dd').format(initialDate));
-    final _amountController =
+    final amountController =
         TextEditingController(text: initialAmount.toString());
-    final _noteController = TextEditingController(text: initialNote);
-    final _categoryController =
+    final noteController = TextEditingController(text: initialNote);
+    final categoryController =
         TextEditingController(text: initialCategory.toString());
     final GlobalKey<DropDownFieldCustomState> dropdownFieldCustomKey =
         GlobalKey<DropDownFieldCustomState>();
-    bool _type = initialType;
+    bool type = initialType;
 
-    void _toggleType(bool type) {
-      _type = type;
+    void toggleType(bool type) {
+      type = type;
+    }
+
+    Future<void> fetchUserID() async {
+      try {
+        final auth = Auth();
+        final user = auth.currentUser;
+        if (user != null) {
+          final userDoc = await auth.getUserByEmail(user.email!);
+          final userData = userDoc.data();
+          if (userData != null) {
+            setState(() {
+              userID = userData['id'];
+            });
+          }
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+        setState(() {});
+      }
     }
 
     showDialog<void>(
@@ -303,7 +323,7 @@ class _CustomBlockState extends State<CustomBlock> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: secondaryColor,
-          contentPadding: EdgeInsets.all(10.0),
+          contentPadding: const EdgeInsets.all(10.0),
           content: Container(
             width: double.maxFinite,
             // constraints: BoxConstraints(maxHeight: 800),
@@ -324,30 +344,48 @@ class _CustomBlockState extends State<CustomBlock> {
                         style: TextStyle(
                           color: textColor,
                           fontFamily: 'BalooThambi2',
-                          fontSize: 20,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       IconButton(
                         icon: Icon(Icons.save, color: iconColor),
                         onPressed: () async {
-                          int amount =
-                              int.tryParse(_amountController.text) ?? 0;
+                          int amount = int.tryParse(amountController.text) ?? 0;
                           DateTime date =
-                              DateTime.tryParse(_dateController.text) ??
+                              DateTime.tryParse(dateController.text) ??
                                   DateTime.now();
-                          String note = _noteController.text;
-                          int category =
-                              int.tryParse(_categoryController.text) ?? 0;
+                          String note = noteController.text;
+                          int? categoryId = dropdownFieldCustomKey.currentState
+                              ?.getSelectedCategoryId();
+
+                          if (categoryId == null) {
+                            print('No category selected');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: redCol,
+                                content: Text(
+                                  'No Category Selected',
+                                  style: TextStyle(
+                                    fontFamily: 'BalooThambi2',
+                                    color: whiteColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                            return;
+                          }
 
                           await FirestoreService().updateData(
                             docId,
                             userID,
                             note,
                             date,
-                            _type,
+                            type,
                             amount,
-                            category,
+                            categoryId,
                           );
 
                           Navigator.of(context).pop();
@@ -358,7 +396,8 @@ class _CustomBlockState extends State<CustomBlock> {
                   icon: Icons.dataset_outlined,
                   text: 'Amount',
                   hint: 'Amount here...',
-                  textController: _amountController,
+                  textController: amountController,
+                  keyboard: TextInputType.number,
                 ),
                 CustomTextFieldEmpty(
                   icon: Icons.calendar_today_outlined,
@@ -400,28 +439,29 @@ class _CustomBlockState extends State<CustomBlock> {
                     );
 
                     if (picked != null) {
-                      _dateController.text = picked.toString().split(" ")[0];
+                      dateController.text =
+                          DateFormat('yyyy/MM/dd').format(picked);
                     }
                   },
-                  textController: _dateController,
+                  textController: dateController,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 CustomTextFieldEmpty(
                   icon: Icons.note_alt_outlined,
                   text: 'Note',
                   hint: 'Notes...',
-                  textController: _noteController,
+                  textController: noteController,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 DropDownFieldCustom(
                   key: dropdownFieldCustomKey,
                   type: widget._type,
                   width: 80,
                   text: 'Category',
                   icon: Icons.widgets,
-                  categoryController: _categoryController,
+                  categoryController: categoryController,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ),
@@ -469,14 +509,14 @@ class CustomBlockTwo extends StatefulWidget {
 class _CustomBlockTwoState extends State<CustomBlockTwo> {
   @override
   Widget build(BuildContext context) {
-    String _formattedamount = NumberFormat.currency(
+    String formattedamount = NumberFormat.currency(
       locale: locale,
       symbol: symbol,
       decimalDigits: 0,
     ).format(widget._amount);
 
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       width: widget._size,
       decoration: BoxDecoration(
         color: primaryColor,
@@ -512,7 +552,7 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
                 ),
               ),
               Text(
-                _formattedamount,
+                formattedamount,
                 style: TextStyle(
                   fontFamily: 'BalooThambi2',
                   color: whiteColor,

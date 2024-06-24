@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+//Universal variables
+//Money variables
 String locale = 'id_ID';
 String symbol = "Rp. ";
 
+//Enums for expense and income
 enum CategoryExpense {
   transportation(
     'Transportation',

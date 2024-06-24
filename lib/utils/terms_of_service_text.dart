@@ -1,3 +1,4 @@
+//Complete terms of service text
 const String tosText = ''' 1. Introduction
 Welcome to HampTrack, a money-saving application designed to help you manage and grow your savings effectively. By accessing or using HampTrack (the "App"), you agree to comply with and be bound by the following terms and conditions (the "Terms of Service"). If you do not agree with these terms, you must not use the App.
 

@@ -1,6 +1,6 @@
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/components/checkbox.dart';
-import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/components/text_fields.dart';
 import 'package:dev_hampter/routes/routes.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';

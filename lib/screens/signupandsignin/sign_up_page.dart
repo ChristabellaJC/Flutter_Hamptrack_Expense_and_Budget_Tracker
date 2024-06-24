@@ -1,6 +1,6 @@
 import 'package:dev_hampter/components/buttons.dart';
 import 'package:dev_hampter/components/checkbox.dart';
-import 'package:dev_hampter/components/textFields.dart';
+import 'package:dev_hampter/components/text_fields.dart';
 import 'package:dev_hampter/functions/authentication/create_user.dart';
 import 'package:dev_hampter/functions/authentication/user_model.dart';
 import 'package:dev_hampter/routes/routes.dart';

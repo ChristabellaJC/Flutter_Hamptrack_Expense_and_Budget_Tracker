@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Indicators for piechart
 class Indicator extends StatelessWidget {
   const Indicator({
     super.key,

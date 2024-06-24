@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_hampter/functions/data/firestore_service.dart';
-import 'package:stroke_text/stroke_text.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 import 'package:dev_hampter/functions/authentication/auth.dart';
 import 'package:dev_hampter/components/mou_state.dart';
@@ -22,8 +21,8 @@ class _HomePageState extends State<HomePage> {
   String username = '';
   String userID = '';
   bool isLoading = true;
-  double userBudget = 0; // This will hold the user's set budget
-  double totalExpenses = 0.0; // Sum of all expenses
+  double userBudget = 0; 
+  double totalExpenses = 0.0;
   FirestoreService firestoreService = FirestoreService();
 
   @override
@@ -33,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     fetchData();
   }
 
+  //Fetch username function
   Future<void> fetchUsername() async {
     try {
       final auth = Auth();
@@ -66,41 +66,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _deleteData(String docId) async {
-    try {
-      await firestoreService.deleteData(userID, docId);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: greenCol,
-          content: Text(
-            'Data deleted successfully',
-            style: TextStyle(
-              fontFamily: 'BalooThambi2',
-              color: whiteColor,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: redCol,
-          content: Text(
-            'Failed to delete data: $e',
-            style: TextStyle(
-              fontFamily: 'BalooThambi2',
-              color: whiteColor,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
+  //Fetching data function
   Future<void> fetchData() async {
     try {
       final auth = Auth();
@@ -111,13 +77,13 @@ class _HomePageState extends State<HomePage> {
         if (userData != null) {
           String userID = userData['id'];
 
-          // Get current month's start and end dates
+          //Get current month/year
           DateTime now = DateTime.now();
           DateTime startOfMonth = DateTime(now.year, now.month, 1);
           DateTime endOfMonth =
-              DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1));
+              DateTime(now.year, now.month + 1, 1).subtract(const Duration(days: 1));
 
-          // Fetch expenses for the current month
+          //Get expenses for said date
           final expensesCollection = FirebaseFirestore.instance
               .collection('Users')
               .doc(userID)
@@ -129,7 +95,7 @@ class _HomePageState extends State<HomePage> {
               .where('Date', isLessThanOrEqualTo: endOfMonth)
               .get();
 
-          //fetch user budget
+          //Fetch budget
           final userBudgetDoc = await FirebaseFirestore.instance
               .collection('Users')
               .doc(userID)
@@ -143,14 +109,14 @@ class _HomePageState extends State<HomePage> {
             });
           }
 
-          // Calculate total expenses
+          //Calculate total expenses
           int total = 0;
           for (var doc in expensesQuery.docs) {
             total += (doc['Amount'] as num).toInt();
           }
 
           setState(() {
-            totalExpenses = total.toDouble(); // Convert to double if necessary
+            totalExpenses = total.toDouble(); 
             isLoading = false;
           });
         }
@@ -163,7 +129,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // Function to calculate percentage spent
+  //Calculate percentage for progress bar 
   double calculateBudgetPercentage() {
     if (userBudget <= 0.0 || totalExpenses < 0.0) {
       return 0.0;
@@ -171,7 +137,7 @@ class _HomePageState extends State<HomePage> {
 
     double percentage = (userBudget - totalExpenses) / userBudget;
 
-    // Ensure the percentage is within the valid range
+    //Ensure percentage is within range
     if (percentage.isNaN) {
       return 0.0;
     } else if (percentage < 0.0) {
@@ -214,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold,
                         )),
                     isLoading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Text(
                             username,
                             style: TextStyle(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dev_hampter/utils/colors.dart';
 
+//Textfields for settings
 class SettingFields extends StatefulWidget {
   final String label;
   final TextEditingController controller;
@@ -58,10 +59,8 @@ class _SettingFieldsState extends State<SettingFields> {
           obscureText: _isObscured,
           decoration: InputDecoration(
             hintText: widget.label,
-            hintStyle: TextStyle(
-              color: secTextColor,
-              fontFamily: 'BalooThambi2'
-            ),
+            hintStyle:
+                TextStyle(color: secTextColor, fontFamily: 'BalooThambi2'),
             filled: true,
             fillColor: whiteColor,
             enabledBorder: OutlineInputBorder(
@@ -72,7 +71,6 @@ class _SettingFieldsState extends State<SettingFields> {
               borderSide: BorderSide(color: borderColor, width: 2.0),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            
             suffixIcon: widget.isObscured
                 ? IconButton(
                     icon: Icon(

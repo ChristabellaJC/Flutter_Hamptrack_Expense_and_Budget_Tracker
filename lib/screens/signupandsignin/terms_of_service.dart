@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:dev_hampter/utils/terms_of_service_text.dart';
 
+//Terms of service page
 class TermsOfServicePage extends StatefulWidget {
   const TermsOfServicePage({super.key});
 
@@ -66,15 +67,13 @@ class _TermsOfServicePage extends State<TermsOfServicePage> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Container(
-                            child: Text(
-                              tosText,
-                              style: TextStyle(
-                                fontFamily: 'BalooThambi2',
-                                fontWeight: FontWeight.normal,
-                                color: textColor,
-                                fontSize: 14,
-                              ),
+                          child: Text(
+                            tosText,
+                            style: TextStyle(
+                              fontFamily: 'BalooThambi2',
+                              fontWeight: FontWeight.normal,
+                              color: textColor,
+                              fontSize: 14,
                             ),
                           ),
                         ),

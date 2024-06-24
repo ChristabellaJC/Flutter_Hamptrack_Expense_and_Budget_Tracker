@@ -9,9 +9,9 @@ import "package:dev_hampter/screens/signupandsignin/sign_in_page.dart";
 import "package:dev_hampter/screens/splashscreens/splash_screen.dart";
 import "package:dev_hampter/screens/signupandsignin/terms_of_service.dart";
 import "package:dev_hampter/screens/splashscreens/welcome_page.dart";
-import "package:dev_hampter/screens/account/about_page.dart";
 import "package:get/get.dart";
 
+//Routes class
 class RoutesClass {
   static String splashScreen = "/splashScreen";
   static String welcomePage = "/welcomePage";

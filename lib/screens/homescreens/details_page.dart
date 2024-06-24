@@ -10,6 +10,7 @@ import 'package:dev_hampter/functions/chart/pie_chart.dart';
 
 void main() => runApp(const DetailsPage());
 
+//Details Page
 class DetailsPage extends StatefulWidget {
   const DetailsPage({super.key});
 
@@ -29,11 +30,14 @@ class _DetailsPageState extends State<DetailsPage> {
   int totalExpense = 0;
 
   @override
+
+  //Initialize before page loads
   void initState() {
     super.initState();
-    fetchUsername();
+    fetchUserID();
   }
 
+  //To determine what date user picked
   void _handleDateSelected(DateTime selectedDate) {
     setState(() {
       this.selectedDate = selectedDate;
@@ -41,7 +45,8 @@ class _DetailsPageState extends State<DetailsPage> {
     fetchMonthlySummary();
   }
 
-  Future<void> fetchUsername() async {
+  //Fetch userID
+  Future<void> fetchUserID() async {
     try {
       final auth = Auth();
       final user = auth.currentUser;
@@ -50,11 +55,10 @@ class _DetailsPageState extends State<DetailsPage> {
         final userData = userDoc.data();
         if (userData != null) {
           setState(() {
-            username = userData['Username'];
             userID = userData['id'] ?? '';
             isLoading = false;
           });
-          fetchMonthlySummary(); // Fetch summary after getting userID
+          fetchMonthlySummary();
         }
       }
     } catch (e) {
@@ -65,13 +69,13 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
+  //Fetching data for each month/year
   Future<void> fetchMonthlySummary() async {
     try {
       if (userID.isNotEmpty) {
         Map<String, int> summary =
             await firestoreService.getMonthlySummary(userID, selectedDate);
-        int budget =
-            await firestoreService.fetchMonthlyBudget(userID); // Fetch budget
+        int budget = await firestoreService.fetchMonthlyBudget(userID);
         setState(() {
           totalIncome = summary['income']!;
           totalExpense = summary['expense']!;
@@ -83,6 +87,7 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
+  //Function to delete data
   void _deleteData(String docId) async {
     try {
       await firestoreService.deleteData(userID, docId);
@@ -100,7 +105,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ),
       );
-      fetchMonthlySummary(); // Refresh summary after deletion
+      fetchMonthlySummary();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -151,6 +156,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        //Details Start
                         Text(
                           'Details',
                           style: TextStyle(
@@ -163,6 +169,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         SizedBox(
                           height: height * .02,
                         ),
+                        //Calendar picker
                         HorizontalCalendar(
                           onDateSelected: _handleDateSelected,
                         ),
@@ -177,6 +184,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         SizedBox(
                           height: height * .02,
                         ),
+                        //Budget shown
                         CustomBlockTwo(
                           icon: Icons.account_balance_outlined,
                           size: width,
@@ -191,6 +199,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         SizedBox(
                           height: height * .02,
                         ),
+                        //Income and Expense shown
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -198,7 +207,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               size: width * .44,
                               icon: Icons.savings,
                               text: 'Income',
-                              amount: totalIncome,
+                              amount: totalExpense,
                               numberSize: 15,
                               titleSize: 20,
                               iconBack: 60,
@@ -209,7 +218,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               size: width * .44,
                               icon: Icons.payments,
                               text: 'Expense',
-                              amount: totalExpense,
+                              amount: totalIncome,
                               numberSize: 15,
                               titleSize: 20,
                               iconBack: 60,
@@ -233,6 +242,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         SizedBox(
                           height: height * 0.15,
                         ),
+                        //Pie chart shown
                         PieChartSample2(
                           userId: userID,
                           selectedDate: selectedDate,
@@ -258,16 +268,13 @@ class _DetailsPageState extends State<DetailsPage> {
                                 child: Text('Error: ${snapshot.error}'),
                               );
                             }
-
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-
                             List<DocumentSnapshot> data = snapshot.data!.docs;
-
                             if (data.isEmpty) {
                               return Center(
                                 child: Text(
@@ -280,15 +287,15 @@ class _DetailsPageState extends State<DetailsPage> {
                                 ),
                               );
                             }
-
+                            //Build list for history
                             return Column(
                               children: [
                                 ListView.separated(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount: data.length,
                                   separatorBuilder: (context, index) =>
-                                      Divider(),
+                                      const Divider(),
                                   itemBuilder: (context, index) {
                                     var doc = data[index];
                                     var docId = doc.id;
@@ -298,7 +305,6 @@ class _DetailsPageState extends State<DetailsPage> {
                                         (doc['Date'] as Timestamp).toDate();
                                     var note = doc['Note'];
                                     var category = doc['Category'];
-
                                     return CustomBlock(
                                       amount: amount,
                                       category: category,
@@ -307,7 +313,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       note: note,
                                       docId: docId,
                                       onDelete: _deleteData,
-                                      userId: userID, // Pass the userID here
+                                      userId: userID, 
                                     );
                                   },
                                 ),

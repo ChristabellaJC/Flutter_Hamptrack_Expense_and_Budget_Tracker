@@ -11,9 +11,8 @@ import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-
 class EditBudgetPage extends StatefulWidget {
-  const EditBudgetPage({Key? key}) : super(key: key);
+  const EditBudgetPage({super.key});
 
   @override
   State<EditBudgetPage> createState() => _EditBudgetPageState();
@@ -22,60 +21,67 @@ class EditBudgetPage extends StatefulWidget {
 class _EditBudgetPageState extends State<EditBudgetPage> {
   double height = 0, width = 0;
   final _amountController = TextEditingController();
-  NumberFormat _numberFormat = NumberFormat.decimalPattern('id-ID');
+  final NumberFormat _numberFormat = NumberFormat.decimalPattern('id-ID');
 
-    Future<void> _submitData(BuildContext context) async {
+  //Function to submit data
+  Future<void> _submitData(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      // Handle the case when the user is not signed in
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('User not signed in', 
-          style: TextStyle(color: textColor)),
+          content:
+              Text('User not signed in', style: TextStyle(color: textColor)),
           backgroundColor: primaryColor,
         ),
       );
       return;
     }
 
+    //Function to enter budget
     final String budgetStr = _amountController.text;
     if (budgetStr.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid amount', 
-          style: TextStyle(color: textColor)),
+        SnackBar(
+          content: Text('Please enter a valid amount',
+              style: TextStyle(color: textColor)),
           backgroundColor: primaryColor,
         ),
       );
       return;
     }
 
+    //Function to parse budget
     final double? budget = double.tryParse(budgetStr);
     if (budget == null || budget <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a valid amount',
-        style: TextStyle(color: textColor)),
+        SnackBar(
+          content: Text('Please enter a valid amount',
+              style: TextStyle(color: textColor)),
           backgroundColor: primaryColor,
         ),
       );
       return;
     }
 
+    //Function to update budget amount in firestore
     try {
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(user.uid)
           .update({'Budget': budget});
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Budget updated successfully', 
-          style: TextStyle(color: textColor)),
+        SnackBar(
+          content: Text('Budget updated successfully',
+              style: TextStyle(color: textColor)),
           backgroundColor: primaryColor,
-          ),
+        ),
       );
-      Get.to(() => NavBar());
+      Get.to(() => const NavBar());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to update budget: $e', 
-        style: TextStyle(color: textColor)),
+        SnackBar(
+          content: Text('Failed to update budget: $e',
+              style: TextStyle(color: textColor)),
           backgroundColor: primaryColor,
         ),
       );
@@ -88,7 +94,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
     _loadUserBudget();
   }
 
-
+  //Load current budget
   Future<void> _loadUserBudget() async {
     try {
       final auth = Auth();
@@ -136,106 +142,105 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
             child: Padding(
               padding: accPadding,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => NavBar());
-                          },
-                          icon: Icon(
-                            Icons.highlight_off,
-                            color: iconColor,
-                            size: titleAccFont,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Get.to(() => const NavBar());
+                        },
+                        icon: Icon(
+                          Icons.highlight_off,
+                          color: iconColor,
+                          size: titleAccFont,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Edit Budget',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: titleAccFont,
+                            fontFamily: 'BalooThambi2',
+                            fontWeight: FontWeight.w800,
+                            color: textColor,
                           ),
                         ),
-
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Edit Budget',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: titleAccFont,
-                              fontFamily: 'BalooThambi2',
-                              fontWeight: FontWeight.w800,
-                              color: textColor,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        child: Padding( 
-                          padding: accPadding,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: textColor,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      symbol,
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: accPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: textColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    symbol,
+                                    style: TextStyle(
+                                      fontFamily: 'BalooThambi2',
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: whiteColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: width * .6,
+                                    child: TextField(
+                                      controller: _amountController,
+                                      cursorColor: whiteColor,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly,
+                                      ],
                                       style: TextStyle(
                                         fontFamily: 'BalooThambi2',
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
                                         color: whiteColor,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: width * .6,
-                                      child: TextField(
-                                        controller: _amountController,
-                                        cursorColor: whiteColor,
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly,
-                                        ],
-                                        style: TextStyle(
-                                          fontFamily: 'BalooThambi2',
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: whiteColor,
-                                        ),
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
-                                          contentPadding: EdgeInsets.zero,
-                                        ),
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        contentPadding: EdgeInsets.zero,
                                       ),
                                     ),
-                                  ], 
-                                ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 20),
-                              CustomButton(
-                                enabledText: "Save Budget", 
-                                onPressed: () => _submitData(context),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 20),
+                            CustomButton(
+                              enabledText: "Save Budget",
+                              onPressed: () => _submitData(context),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              )
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
-      )
+      ),
     );
   }
 }

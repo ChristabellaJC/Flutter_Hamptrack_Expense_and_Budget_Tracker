@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Custom Checkbox
 class CustomCheckBox extends StatefulWidget {
   final double scaleSize;
   final bool value;
@@ -17,7 +18,7 @@ class CustomCheckBox extends StatefulWidget {
 }
 
 class _CustomCheckBoxState extends State<CustomCheckBox> {
-  Color _borderColor = const Color(0xFFE0AC00);
+  final Color _borderColor = const Color(0xFFE0AC00);
 
   @override
   Widget build(BuildContext context) {
