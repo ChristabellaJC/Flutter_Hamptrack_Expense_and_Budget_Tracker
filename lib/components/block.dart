@@ -12,7 +12,7 @@ class CustomBlock extends StatefulWidget {
   final bool _type;
   final String _note;
   final String docId;
-  final String userID; // Accept userID as a parameter
+  final String userID;
   final Function(String) onDelete;
 
   const CustomBlock({
@@ -42,7 +42,17 @@ class _CustomBlockState extends State<CustomBlock> {
   }
 
   IconData _icon() {
-    return widget._type ? Icons.payments : Icons.savings;
+    if (widget._type) {
+      return CategoryExpense.values
+          .firstWhere((e) => e.id == widget._category,
+              orElse: () => CategoryExpense.essentials)
+          .icon;
+    } else {
+      return CategoryIncome.values
+          .firstWhere((e) => e.id == widget._category,
+              orElse: () => CategoryIncome.salary)
+          .icon;
+    }
   }
 
   String _formattedDate() {
@@ -110,7 +120,7 @@ class _CustomBlockState extends State<CustomBlock> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -280,6 +290,8 @@ class _CustomBlockState extends State<CustomBlock> {
     final _noteController = TextEditingController(text: initialNote);
     final _categoryController =
         TextEditingController(text: initialCategory.toString());
+    final GlobalKey<DropDownFieldCustomState> dropdownFieldCustomKey =
+        GlobalKey<DropDownFieldCustomState>();
     bool _type = initialType;
 
     void _toggleType(bool type) {
@@ -401,11 +413,13 @@ class _CustomBlockState extends State<CustomBlock> {
                   textController: _noteController,
                 ),
                 SizedBox(height: 10),
-                CustomTextFieldEmpty(
-                  icon: Icons.category_outlined,
+                DropDownFieldCustom(
+                  key: dropdownFieldCustomKey,
+                  type: widget._type,
+                  width: 80,
                   text: 'Category',
-                  hint: 'Category here...',
-                  textController: _categoryController,
+                  icon: Icons.widgets,
+                  categoryController: _categoryController,
                 ),
                 SizedBox(height: 10),
               ],
@@ -421,14 +435,32 @@ class CustomBlockTwo extends StatefulWidget {
   final IconData _icon;
   final String _text;
   final int _amount;
-  const CustomBlockTwo({
-    super.key,
-    required IconData icon,
-    required String text,
-    required int amount,
-  })  : _icon = icon,
+  final double _size;
+  final double _titleSize;
+  final double _numberSize;
+  final double _iconSize;
+  final double _iconBack;
+  final double _width;
+  const CustomBlockTwo(
+      {super.key,
+      required IconData icon,
+      required String text,
+      required int amount,
+      required double size,
+      required double titleSize,
+      required double numberSize,
+      required double iconSize,
+      required double iconBack,
+      required double width})
+      : _icon = icon,
         _text = text,
-        _amount = amount;
+        _amount = amount,
+        _size = size,
+        _titleSize = titleSize,
+        _numberSize = numberSize,
+        _iconBack = iconBack,
+        _iconSize = iconSize,
+        _width = width;
 
   @override
   State<CustomBlockTwo> createState() => _CustomBlockTwoState();
@@ -445,6 +477,7 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
 
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      width: widget._size,
       decoration: BoxDecoration(
         color: primaryColor,
         borderRadius: BorderRadius.circular(20),
@@ -452,7 +485,7 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
       child: Row(
         children: [
           Container(
-            width: 60,
+            width: widget._iconBack,
             decoration: BoxDecoration(
               color: secondaryColor,
               borderRadius: BorderRadius.circular(20),
@@ -460,11 +493,11 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
             child: Icon(
               widget._icon,
               color: primaryColor,
-              size: 50,
+              size: widget._iconSize,
             ),
           ),
           SizedBox(
-            width: 20,
+            width: widget._width,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -474,7 +507,7 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
                 style: TextStyle(
                   fontFamily: 'BalooThambi2',
                   color: whiteColor,
-                  fontSize: 25,
+                  fontSize: widget._titleSize,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -483,7 +516,7 @@ class _CustomBlockTwoState extends State<CustomBlockTwo> {
                 style: TextStyle(
                   fontFamily: 'BalooThambi2',
                   color: whiteColor,
-                  fontSize: 20,
+                  fontSize: widget._numberSize,
                   fontWeight: FontWeight.normal,
                 ),
               ),
