@@ -18,10 +18,9 @@ class Auth {
       password: password,
     );
 
-    // Inisialisasi budget default
     await _firestore.collection('Users').doc(userCredential.user?.uid).set({
       'Email': email,
-      'Budget': 1000000,  // Default budget
+      'Budget': 1000000,  
     });
 
     return userCredential;

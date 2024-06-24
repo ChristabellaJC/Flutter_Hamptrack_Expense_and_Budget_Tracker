@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-int monthlyBudget = 800000; 
-int remainingBudget = monthlyBudget; 
-double budget = remainingBudget / 100; 
+
 String locale = 'id_ID';
 String symbol = "Rp. ";
-double budgetAmount = 1000;
 
 enum CategoryExpense {
   transportation(

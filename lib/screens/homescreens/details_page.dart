@@ -6,7 +6,6 @@ import 'package:dev_hampter/components/block.dart';
 import 'package:dev_hampter/components/dates.dart';
 import 'package:dev_hampter/utils/colors.dart';
 import 'package:dev_hampter/utils/sizes.dart';
-import 'package:dev_hampter/utils/uni_vars.dart';
 import 'package:dev_hampter/functions/chart/pie_chart.dart';
 
 void main() => runApp(const DetailsPage());
@@ -23,7 +22,11 @@ class _DetailsPageState extends State<DetailsPage> {
   String username = '';
   String userID = '';
   bool isLoading = true;
+  int monthlyBudget = 0;
   FirestoreService firestoreService = FirestoreService();
+
+  int totalIncome = 0;
+  int totalExpense = 0;
 
   @override
   void initState() {
@@ -35,6 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
     setState(() {
       this.selectedDate = selectedDate;
     });
+    fetchMonthlySummary();
   }
 
   Future<void> fetchUsername() async {
@@ -50,6 +54,7 @@ class _DetailsPageState extends State<DetailsPage> {
             userID = userData['id'] ?? '';
             isLoading = false;
           });
+          fetchMonthlySummary(); // Fetch summary after getting userID
         }
       }
     } catch (e) {
@@ -57,6 +62,24 @@ class _DetailsPageState extends State<DetailsPage> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  Future<void> fetchMonthlySummary() async {
+    try {
+      if (userID.isNotEmpty) {
+        Map<String, int> summary =
+            await firestoreService.getMonthlySummary(userID, selectedDate);
+        int budget =
+            await firestoreService.fetchMonthlyBudget(userID); // Fetch budget
+        setState(() {
+          totalIncome = summary['income']!;
+          totalExpense = summary['expense']!;
+          monthlyBudget = budget;
+        });
+      }
+    } catch (e) {
+      print('Error fetching monthly summary: $e');
     }
   }
 
@@ -77,6 +100,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ),
       );
+      fetchMonthlySummary(); // Refresh summary after deletion
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -142,17 +166,86 @@ class _DetailsPageState extends State<DetailsPage> {
                         HorizontalCalendar(
                           onDateSelected: _handleDateSelected,
                         ),
-                        CustomBlockTwo(
-                          icon: Icons.account_balance_outlined,
-                          text: 'Budget',
-                          amount: monthlyBudget,
+                        Divider(
+                          color: textColor,
+                        ),
+                        Divider(
+                          color: textColor,
+                          endIndent: 80,
+                          indent: 80,
                         ),
                         SizedBox(
-                          height: height * 0.2, // Adjust the height as needed
+                          height: height * .02,
+                        ),
+                        CustomBlockTwo(
+                          icon: Icons.account_balance_outlined,
+                          size: width,
+                          text: 'Budget',
+                          amount: monthlyBudget,
+                          numberSize: 20,
+                          titleSize: 25,
+                          iconBack: 70,
+                          iconSize: 50,
+                          width: 10,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomBlockTwo(
+                              size: width * .44,
+                              icon: Icons.savings,
+                              text: 'Income',
+                              amount: totalIncome,
+                              numberSize: 15,
+                              titleSize: 20,
+                              iconBack: 60,
+                              iconSize: 40,
+                              width: 5,
+                            ),
+                            CustomBlockTwo(
+                              size: width * .44,
+                              icon: Icons.payments,
+                              text: 'Expense',
+                              amount: totalExpense,
+                              numberSize: 15,
+                              titleSize: 20,
+                              iconBack: 60,
+                              iconSize: 40,
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        Text(
+                          'Average',
+                          style: TextStyle(
+                            color: textColor,
+                            fontFamily: 'BalooThambi2',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.15,
                         ),
                         PieChartSample2(
                           userId: userID,
                           selectedDate: selectedDate,
+                        ),
+                        SizedBox(height: height * .01),
+                        Text(
+                          'History',
+                          style: TextStyle(
+                            color: textColor,
+                            fontFamily: 'BalooThambi2',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: height * .02),
                         StreamBuilder<QuerySnapshot>(
