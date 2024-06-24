@@ -6,10 +6,10 @@ class FeatureItem extends StatelessWidget {
   final String description;
 
   const FeatureItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +19,15 @@ class FeatureItem extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: textColor,
-            fontFamily: 'BalooThambi2',
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            color: textColor,
           ),
         ),
         const SizedBox(height: 5),
         Text(
           description,
-          style: TextStyle(
-            color: textColor,
-            fontFamily: 'BalooThambi2',
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 14, color: Colors.black54),
           textAlign: TextAlign.justify,
         ),
         const SizedBox(height: 10),

@@ -83,6 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
       username: _usernameController.text.trim(),
+      budget: 100000,
     );
     createUser(user);
 
@@ -91,7 +92,6 @@ class _SignUpPageState extends State<SignUpPage> {
         email: user.email,
         password: user.password,
       );
-      // Navigate to the home page after successful sign up
       Get.toNamed(RoutesClass.navBar);
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 padding: padding,
-                height: height * .8, // Adjust the height as needed
+                height: height * .8,
                 width: width,
                 decoration: BoxDecoration(
                   color: secondaryColor,

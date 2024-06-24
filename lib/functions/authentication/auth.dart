@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//Authorize Users class
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -10,7 +9,6 @@ class Auth {
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  //Create new user
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
@@ -21,16 +19,9 @@ class Auth {
       password: password,
     );
 
-    //Set default budget
-    await _firestore.collection('Users').doc(userCredential.user?.uid).set({
-      'Email': email,
-      'Budget': 1000000,
-    });
-
     return userCredential;
   }
 
-  //Sign in
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -41,7 +32,6 @@ class Auth {
     );
   }
 
-  //Get user by E-mail
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserByEmail(
       String email) async {
     final querySnapshot = await _firestore
@@ -53,12 +43,10 @@ class Auth {
         : throw Exception('User not found');
   }
 
-  //Sign out
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 
-  //Update data
   Future<void> updateUserData(
       String userId, Map<String, dynamic> userData) async {
     try {
@@ -69,6 +57,49 @@ class Auth {
     } catch (e) {
       print('Error updating user data: $e');
       throw Exception('Failed to update user data');
+    }
+  }
+
+  Future<void> updateEmail(String newEmail) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updateEmail(newEmail);
+
+        // Jika berhasil, update juga email di Firestore
+        await updateUserEmailInFirestore(user.uid, newEmail);
+      } else {
+        throw Exception('Current user is null');
+      }
+    } catch (e) {
+      print('Error updating email: $e');
+      throw Exception('Failed to update email');
+    }
+  }
+
+  Future<void> updateUserEmailInFirestore(
+      String userId, String newEmail) async {
+    try {
+      await _firestore.collection('Users').doc(userId).update({
+        'Email': newEmail,
+      });
+    } catch (e) {
+      print('Error updating email in Firestore: $e');
+      throw Exception('Failed to update email in Firestore');
+    }
+  }
+
+  Future<void> updatePassword(String newPassword) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updatePassword(newPassword);
+      } else {
+        throw Exception('Current user is null');
+      }
+    } catch (e) {
+      print('Error updating password: $e');
+      throw Exception('Failed to update password');
     }
   }
 }
