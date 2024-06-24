@@ -294,8 +294,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: data.length,
-                                  separatorBuilder: (context, index) =>
-                                      const Divider(),
+                                  separatorBuilder: (context, index) => Divider(
+                                    color: secondaryColor,
+                                  ),
                                   itemBuilder: (context, index) {
                                     var doc = data[index];
                                     var docId = doc.id;
@@ -313,7 +314,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       note: note,
                                       docId: docId,
                                       onDelete: _deleteData,
-                                      userId: userID, 
+                                      userId: userID,
                                     );
                                   },
                                 ),
