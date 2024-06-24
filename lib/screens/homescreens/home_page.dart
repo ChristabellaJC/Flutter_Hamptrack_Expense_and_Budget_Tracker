@@ -33,12 +33,6 @@ class _HomePageState extends State<HomePage> {
     fetchData();
   }
 
-  // void _handleDateSelected(DateTime selectedDate) {
-  //   setState(() {
-  //     this.selectedDate = selectedDate;
-  //   });
-  // }
-
   Future<void> fetchUsername() async {
     try {
       final auth = Auth();
@@ -117,7 +111,6 @@ class _HomePageState extends State<HomePage> {
         if (userData != null) {
           String userID = userData['id'];
 
-
           // Get current month's start and end dates
           DateTime now = DateTime.now();
           DateTime startOfMonth = DateTime(now.year, now.month, 1);
@@ -142,7 +135,9 @@ class _HomePageState extends State<HomePage> {
               .doc(userID)
               .get();
 
-          if (userBudgetDoc.exists && userBudgetDoc.data() != null && userBudgetDoc.data()!['Budget'] != null) {
+          if (userBudgetDoc.exists &&
+              userBudgetDoc.data() != null &&
+              userBudgetDoc.data()!['Budget'] != null) {
             setState(() {
               userBudget = (userBudgetDoc.data()!['Budget'] as num).toDouble();
             });
@@ -187,9 +182,6 @@ class _HomePageState extends State<HomePage> {
     return percentage;
   }
 
-
-
-  
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -212,34 +204,25 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: height * .05,
+                      height: height * .02,
                     ),
-                    StrokeText(
-                      text: 'Welcome Back,',
-                      textAlign: TextAlign.center,
-                      textStyle: TextStyle(
-                        fontFamily: 'BalooThambi2',
-                        fontSize: 20,
-                        color: whiteColor,
-                        fontWeight: FontWeight.w500,
-                        height: .1,
-                      ),
-                      strokeColor: secTextColor,
-                      strokeWidth: 5,
-                    ),
+                    Text('Welcome Back,',
+                        style: TextStyle(
+                          fontFamily: 'BalooThambi2',
+                          fontSize: 20,
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        )),
                     isLoading
                         ? CircularProgressIndicator()
-                        : StrokeText(
-                            text: username,
-                            textAlign: TextAlign.center,
-                            textStyle: TextStyle(
+                        : Text(
+                            username,
+                            style: TextStyle(
                               fontFamily: 'BalooThambi2',
                               fontSize: 40,
-                              color: whiteColor,
+                              color: textColor,
                               fontWeight: FontWeight.bold,
                             ),
-                            strokeColor: secTextColor,
-                            strokeWidth: 5,
                           ),
                   ],
                 ),
@@ -275,10 +258,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                              color: iconColor, width: 2), // Outline border
-                          borderRadius: BorderRadius.circular(
-                              10), // Adjust border radius as needed
+                          border: Border.all(color: iconColor, width: 2),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: GFProgressBar(
                           percentage: calculateBudgetPercentage(),
@@ -328,82 +309,6 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: height * .05,
                       ),
-                      // Text(
-                      //   'History',
-                      //   style: TextStyle(
-                      //     color: textColor,
-                      //     fontFamily: 'BalooThambi2',
-                      //     fontSize: 35,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: height * .01,
-                      // ),
-                      // HorizontalCalendar(
-                      //   onDateSelected: _handleDateSelected,
-                      // ),
-                      // StreamBuilder<QuerySnapshot>(
-                      //   stream: firestoreService.getDataStream(
-                      //       userID, selectedDate),
-                      //   builder: (BuildContext context,
-                      //       AsyncSnapshot<QuerySnapshot> snapshot) {
-                      //     if (snapshot.hasError) {
-                      //       return Center(
-                      //         child: Text('Error: ${snapshot.error}'),
-                      //       );
-                      //     }
-
-                      //     if (snapshot.connectionState ==
-                      //         ConnectionState.waiting) {
-                      //       return Center(
-                      //         child: CircularProgressIndicator(),
-                      //       );
-                      //     }
-
-                      //     List<DocumentSnapshot> data = snapshot.data!.docs;
-
-                      //     if (data.isEmpty) {
-                      //       return Center(
-                      //         child: Text(
-                      //           'No Data Yet!',
-                      //           style: TextStyle(
-                      //             color: textColor,
-                      //             fontSize: 20,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }
-
-                      //     return ListView.separated(
-                      //       shrinkWrap: true,
-                      //       physics: NeverScrollableScrollPhysics(),
-                      //       itemCount: data.length,
-                      //       separatorBuilder: (context, index) => Divider(),
-                      //       itemBuilder: (context, index) {
-                      //         var doc = data[index];
-                      //         var docId = doc.id;
-                      //         var amount = doc['Amount'];
-                      //         var type = doc['Type'];
-                      //         var date = (doc['Date'] as Timestamp).toDate();
-                      //         var note = doc['Note'];
-                      //         var category = doc['Category'];
-
-                      //         return CustomBlock(
-                      //           amount: amount,
-                      //           category: category,
-                      //           type: type,
-                      //           date: date,
-                      //           note: note,
-                      //           docId: docId,
-                      //           onDelete: _deleteData,
-                      //           userId: userID, // Pass the userID here
-                      //         );
-                      //       },
-                      //     );
-                      //   },
-                      // )
                     ],
                   ),
                 ),
